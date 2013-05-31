@@ -7,6 +7,14 @@
 \usepackage{makeidx}
 \usepackage{microtype}
 \usepackage{fancyhdr}
+	\fancyhead{}
+	\fancyfoot{}
+%\renewcommand{\headrulewidth}{0pt}
+	\fancyhead[EL, OR]{\thepage}
+	\fancyhead[CO]{\rightmark}
+	\fancyhead[CE]{\leftmark}
+\pagestyle{fancy}
+
 \usepackage[mathscr]{eucal}
 \usepackage{setspace}
 \usepackage{caption}
@@ -128,12 +136,32 @@
 \newcommand{\Land}[0]{\wedge}
 \newcommand{\disjointunion}[0]{\sqcup}
 
-\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 \newcommand{\ceiling}[1]{\lceil #1 \rceil}
 
 \newcommand{\dom}[0]{\mbox{dom}~}
 \newcommand{\ran}[0]{\mbox{ran}~}
 
+\lstset{rangeprefix=\/\/\ ,rangesuffix=\ \/\/}
+\lstset{
+	xleftmargin=5.0ex,
+	firstnumber=1,
+	includerangemarker=false,
+	numbers=left,
+	numberstyle=\tiny,
+	language=C,
+	frame=single,
+	columns=fixed,
+	breaklines=true,
+	basicstyle=\footnotesize,
+	tabsize=4
+}
+
+\renewcommand{\footnoterule}{
+	\kern -3pt
+	\hrule width \textwidth height 0.4pt
+	\kern 2.6 pt
+}
 
 \title{Project Euler Problems}
 \author{Michael E. Conlen}
@@ -149,12 +177,30 @@
 Project Euler, \url{http://projecteuler.net/}, is a list of programming problems with a mathematical and algorithmic bent. These problems have solutions that vary from the na\"ive to the sophisticated. While the easiest problems can be effectively solved na\"ively the advanced problems require sophisticated solutions to run effectively. Here we compile a set of solutions in various programming languages along with a mathematical treatment of the sophisticated solutions. Where possible the solutions are generalized for various parameters given in the statement of the problem. 
 
 \tableofcontents
-
 \lstlistoflistings
-
 \mainmatter
 
-\chapter{Problem 1}
+	\chapter{Sum of Natural Numbers Divisible by 3 and 5}
+
+		\section{Introduction}
+			Problem 1 of Project Euler asks the user to sum the integers less than $1000$ which are multiples of $3$ or $5$. The na\"ive solutions is to iterate $k$ over the range of integers and if $k\equiv 0\pmod 3$ or $k\equiv 0\pmod 5$ then add the integer to the sum. This solutions is given in Listing \ref{L:1:naive.c}; however this solution runs in $O(n)$ time. A direct computation can be found. 
+\lstinputlisting[caption=Problem 1: Na\"ive Solution,label=L:1:naive.c,float=htp]{../problems/1/naive.c}
+
+			Let $n$ be the integer we iterate up through, in this case, $999$\footnote{The problem asks for numbers up to $1000$, thus does not include $1000$ where it is a multiple of $5$.}. Let $m_q=\floor{\frac{n}{q}}$, the number of natural numbers less than $n$ which are multiples of the natural number $q$; then notice that the sum of natural numbers less than $n$ and divisible by $q$ is  
+			\begin{alignat}{4}
+				q+2q+3q+\dots+m_q q&=q\sum_{k=1}^{m_q}k \notag \\
+					&=q\frac{(m_q)(m_q+1)}{2}
+			\end{alignat}
+			
+			If we are summing over the integers which are multiples of $q$ and $r$ then each natural number which is a multiple of both $p$ and $r$ is counted twice; thus we subtract multiples of $qr$; and the solution is 
+			\begin{alignat}{4}
+				q\frac{(m_q)(m_q+1)}{2}+r\frac{(m_r)(m_r+1)}{2}-qr\frac{(m_{qr})(m_{qr}+1)}{2}
+			\end{alignat}
+			This solution is given in Listing \ref{L:1:1.c}. 
+			\clearpage\lstinputlisting[caption=Problem 1: C Solution,label=L:1:1.c,float=htp]{../problems/1/1.c}
+			 
+
+
 
 \end{spacing}
 \end{document}  
