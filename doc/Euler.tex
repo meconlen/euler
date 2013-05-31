@@ -1,0 +1,160 @@
+\documentclass[oneside]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{savesym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{makeidx}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage[mathscr]{eucal}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage[pdftex]{graphicx}
+\usepackage[perpage,symbol*,norule,multiple,hang]{footmisc}
+\usepackage{pdftricks}
+\usepackage[basic,box,gate,oldgate,ic,physics,optics]{circ}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{ifthen}
+\usepackage{courier}
+\usepackage[pdftex,bookmarks=true,pdfborder={0 0 0},colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{lscape}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
+\usepackage[h]{esvect}
+\usepackage[T1]{fontenc}
+\usepackage{frcursive}
+\usepackage{polynom}
+
+%\usepackage{tocloft}
+%\setlength{\cftchapnumwidth}{2.5em}
+%\setlength{\cftsecnumwidth}{2.7em}
+%\setlength{\cftsubsecnumwidth}{4.0em}
+%\setlength{\cftsubsubsecnumwidth}{4.1em}
+%\setlength{\cftparanumwidth}{5 em}
+%\setlength{\cftsubparanumwidth}{6 em}
+
+\usepackage{enumitem}
+\usepackage{placeins}
+\newenvironment{callseries}{\fontfamily{calligra}\selectfont}{}
+\newcommand{\textcall}[1]{{\callseries#1}}
+\usepackage{fp}
+\usepackage{forloop}
+
+\makeindex
+
+\newcounter{ex}
+\newcounter{def}
+\newcounter{pr}
+\newtheorem{axiom}{Axiom}[section]
+\newtheorem{problem}{Problem}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Property}
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{claim}[thm]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{algo}[thm]{Alogithm}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{idn}[thm]{Identity}
+
+
+\newcommand{\adj}[1]{\mathrm{adj }~#1}
+%\newcommand{\R}[1]{\mathbb{R}^{#1}}
+\newcommand{\nul}[1]{\mathrm{nul }~#1}
+\newcommand{\col}[1]{\mathrm{col }~#1}
+\newcommand{\Span}[1]{\mathrm{Span }\left\{#1\right\}}
+\newcommand{\Dim}[1]{\mathrm{dim }~#1}
+\newcommand{\Null}[1]{\mathrm{null }~#1}
+\newcommand{\Rank}[1]{\mathrm{rank }~#1}
+\newcommand{\Range}[1]{\mathrm{range }~#1}
+\newcommand{\B}[1]{\textbf{#1}}
+\newcommand{\dist}[1]{\mathrm{dist }#1}
+\newcommand{\norm}[1]{|\B{#1}|}
+\newcommand{\cross}[2]{\vv{#1}\times\vv{#2}}
+\newcommand{\dotp}[2]{\vec{#1}\cdot\vec{#2}}
+
+\newcommand{\StirlingTwo}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+\newcommand{\StirlingOne}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+
+\newcommand{\lcm}[1]{\mathrm{lcm }#1}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pp}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\Diff}[3]{#1^{(#2)}(#3)}
+\newcommand{\del}[0]{\nabla}
+\newcommand{\mref}[1]{\ifmathematics \ref{#1} \fi}
+\newcommand{\ipv}[2]{\langle\vv{#1},\vv{#2}\rangle}
+\newcommand{\ip}[2]{\langle#1,#2\rangle}
+\newcommand{\vnorm}[1]{\left|\left|\vv{#1}\right|\right|}
+\newcommand{\lnorm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\Res}[1]{\mathrm{Res }(#1)}
+\newcommand{\Log}[1]{\mathrm{Log }{#1}}
+
+\savesymbol{triangleleft}
+\savesymbol{trianglelefteq}
+% wide symbols, but mangles triangles. 
+\usepackage{mathabx}
+\newcommand{\normal}[0]{\triangleleft}
+\restoresymbol{ABX}{triangleleft}
+\restoresymbol{ABX}{trianglelefteq}
+
+\newcommand{\image}[1]{\mathrm{Im\ }#1}
+\newcommand{\vaprhi}[0]{\varphi}
+\newcommand{\kernel}[0]{\mathrm{Kern\ }}
+\newcommand{\stab}[2]{\mathrm{Stab}_{#1}\left(#2\right)}
+\newcommand{\Arg}[0]{\mathrm{Arg\ }}
+\newcommand{\orb}[2]{\mathrm{Orb}_{#1}\left(#2\right)}
+\newcommand{\aut}[1]{\mathrm{Aut}(#1)}
+\newcommand{\inn}[1]{\mathrm{Inn}(#1)}
+\newcommand{\syl}[2]{\mathrm{Syl}_{#1}\left(#2\right)}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\charsg}[0]{\mathrm{\ char\ }}
+\newcommand{\card}[1]{\mbox{card }#1}
+\newcommand{\seg}[1]{\mbox{seg }#1}
+
+\newcommand{\Lor}[0]{\vee}
+\newcommand{\Land}[0]{\wedge}
+\newcommand{\disjointunion}[0]{\sqcup}
+
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceiling}[1]{\lceil #1 \rceil}
+
+\newcommand{\dom}[0]{\mbox{dom}~}
+\newcommand{\ran}[0]{\mbox{ran}~}
+
+
+\title{Project Euler Problems}
+\author{Michael E. Conlen}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\begin{spacing}{1.618}
+\frontmatter
+\maketitle
+
+\chapter*{Preface}
+
+Project Euler, \url{http://projecteuler.net/}, is a list of programming problems with a mathematical and algorithmic bent. These problems have solutions that vary from the na\"ive to the sophisticated. While the easiest problems can be effectively solved na\"ively the advanced problems require sophisticated solutions to run effectively. Here we compile a set of solutions in various programming languages along with a mathematical treatment of the sophisticated solutions. Where possible the solutions are generalized for various parameters given in the statement of the problem. 
+
+\tableofcontents
+
+\lstlistoflistings
+
+\mainmatter
+
+\chapter{Problem 1}
+
+\end{spacing}
+\end{document}  
