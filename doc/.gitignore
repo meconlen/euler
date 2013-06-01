@@ -5,3 +5,5 @@
 *.out
 *.synctex.gz
 *.toc
+*.ind
+*.ilg
