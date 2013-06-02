@@ -4,6 +4,9 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{4.1in}
+
 \usepackage{makeidx}
 \usepackage{microtype}
 \usepackage{fancyhdr}
@@ -347,6 +350,17 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		We generalize the above solution to arbitrary $n$ within the limits of \texttt{unsigned long long} in Listing \ref{L:2:3.c}. 
 		
 		\lstinputlisting[caption=Problem 3: General Solution,label=L:2:3.c,float=htp]{../problems/2/3.c}
+
+	\chapter{Largest Prime Factor of $n$}
+		\epigraph{The problem of distinguishing prime numbers from composite numbers and of resolving the latter into their prime factors is known to be one of the mots important and useful in arithmetic}{C. F. Gauss}
+		\begin{quote}
+			The prime factors of 13195 are 5, 7, 13 and 29.
+
+			What is the largest prime factor of the number 600851475143 ?
+		\end{quote}
+	
+		\section{Introduction}
+			Na\"lively we may divide $n$ by the sequence of natural numbers $\set{2, 3, 5, 7, \dots, \floor{\sqrt{n}}}$ saving the result for further computation. This removes successively larger primes from the quotient until the last is found.  
 
 	\printindex
 \end{spacing}
