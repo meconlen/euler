@@ -374,7 +374,17 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		
 			There are a number of more efficient algorithms for larger composite numbers to investigate including the general number sieve. 
 
+	\chapter{Largest Palindrome Product}
 	
+		\begin{quote}
+			A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is $9009 = 91\times 99$.
+
+			Find the largest palindrome made from the product of two 3-digit numbers.
+		\end{quote}
+		
+		\section{Introduction}
+	
+			This problem presents a few programming issues, the first is to factor an integer and find products of the factors of a given decimal size. The other is to iterate the palindrome numbers\footnote{absent any theory which short circuits these requirements.}. The numbers which result from three digit multiplication range from $10000=100\times 100$ to $998001=999\times 999$; thus we must consider representations of palindrome numbers which have an even and odd number of digits. 
 
 		
 	\printindex
