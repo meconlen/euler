@@ -195,7 +195,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		\section{Introduction}
 			
 			The na\"ive solutions is to iterate $k$ over the range of integers and if $k\equiv 0\pmod 3$ or $k\equiv 0\pmod 5$ then add the integer to the sum. This solutions is given in Listing \ref{L:1:naive.c}; however this solution runs in $O(n)$ time. A direct computation can be found. 
-\lstinputlisting[caption=Problem 1: Na\"ive Solution,label=L:1:naive.c,float=htp]{../problems/1/naive.c}
+\lstinputlisting[caption=Problem 1: Na\"ive Solution,label=L:1:naive.c,float=htp]{../lang/C/1-1.c}
 
 		\section{Direct Computation}
 
@@ -210,7 +210,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 				q\frac{(m_q)(m_q+1)}{2}+r\frac{(m_r)(m_r+1)}{2}-qr\frac{(m_{qr})(m_{qr}+1)}{2}
 			\end{alignat}
 			A generalized version of this program is given in Listing \ref{L:1:1.c}. It's runtime is $O(1)$. 
-			\lstinputlisting[caption=Problem 1: C Solution,label=L:1:1.c,float=htp]{../problems/1/1.c}
+			\lstinputlisting[caption=Problem 1: C Solution,label=L:1:1.c,float=htp]{../lang/C/1-2.c}
 			 
 
 	\chapter{Sum of Even Fibonacci Numbers}
@@ -227,7 +227,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		
 			The na\"ive solution is to iterate $k$ over the range of natural numbers computing $F_k$, the $k^{th}$ Fibonacci number, until $F_k>4000000$ and if $F_k$ is even add it to the sum. This solution is given in Listing \ref{L:2:naive.c}. While this solution is generally quick on modern computers it is not efficient. 
 			
-			\lstinputlisting[caption=Problem 2: Na\"ive Solution,label=L:2:naive.c,float=htp]{../problems/2/naive.c}
+			\lstinputlisting[caption=Problem 2: Na\"ive Solution,label=L:2:naive.c,float=htp]{../lang/C/2-1.c}
 		\section{Order of $F_n$}
 			We claim that the computation of \texttt{fib(n)} is at least exponential. Let $T(n)$ be the time to compute the $n^{th}$ Fibonacci number and we can see that if we let $T(0)=1$ in units of the time to make the comparison in Line 6, then $T(1)=2 > 1$ and $T(2)=2+T(1)+T(0)> T(1)+T(0)$. In general $T(n)> T(n-1)+T(n-2)$. That is, the estimate is directly related to the Fibonacci numbers themselves.
 			
@@ -291,7 +291,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 			\begin{alignat}{4}
 				F_k=\floor{\frac{\varphi^k}{\sqrt{5}}+\frac{1}{2}}
 			\end{alignat}
-			\lstinputlisting[caption=Problem 2: \texttt{fib(n)} Direct,label=L:2:1.c,float=htp]{../problems/2/1.c}
+			\lstinputlisting[caption=Problem 2: \texttt{fib(n)} Direct,label=L:2:1.c,float=htp]{../lang/C/2-2.c}
 			This solution is given in Listing \ref{L:2:1.c}. Note that we make use of the fact that for positive numbers typecasting a \texttt{double} to an \texttt{int} type is equivalent to the floor function. In this implementation the runtime of \texttt{fib(n)} is generally $O(1)$ as \texttt{pow()} is implemented in constant time on most processors\footnote{If this is not available exponentiation by squaring is $O(\log n)$.}. This gives the overall program a runtime of $O(\log n)$; but we can do better. 
 		
 	\section{Sum of Even Fibonacci Numbers}
@@ -343,13 +343,13 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 
 		We combine the results of the last two sections in Listing \ref{L:2:2.c}. 
 	
-		\lstinputlisting[caption=Problem 2: Direct Solution,label=L:2:2.c,float=htp]{../problems/2/2.c}
+		\lstinputlisting[caption=Problem 2: Direct Solution,label=L:2:2.c,float=htp]{../lang/C/2-3.c}
 
 	\section{Generalization}
 	
 		We generalize the above solution to arbitrary $n$ within the limits of \texttt{unsigned long long} in Listing \ref{L:2:3.c}. 
 		
-		\lstinputlisting[caption=Problem 2: General Solution,label=L:2:3.c,float=htp]{../problems/2/3.c}
+		\lstinputlisting[caption=Problem 2: General Solution,label=L:2:3.c,float=htp]{../lang/C/2-4.c}
 
 	\chapter{Largest Prime Factor of $n$}
 		\epigraph{The problem of distinguishing prime numbers from composite numbers and of resolving the latter into their prime factors is known to be one of the mots important and useful in arithmetic}{C. F. Gauss}
@@ -368,7 +368,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 			
 			We implement this algorithm in Listing \ref{L:3:naive.c}. 
 			
-			\lstinputlisting[caption=Problem 3: Na\"ive Solution,label=L:3:naive.c,float=htp]{../problems/3/naive.c}
+			\lstinputlisting[caption=Problem 3: Na\"ive Solution,label=L:3:naive.c,float=htp]{../lang/C/3-1.c}
 		
 		\section{Remarks}
 		
