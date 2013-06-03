@@ -1,0 +1,15 @@
+After the first few problems it's clear the extent to which problems will build on each other (yes, I read 
+the web page) in a way that makes having libraries useful. 
+
+We need a way to organize the following... ...there are n problems, each with k solutions, so the solutions
+can be numbered n-k. There may be solutions in multiple compiled languages so we name directories for the languages
+and number the files like 
+C/1-1.c
+C/1-2.c
+...
+C/2-1.c
+...
+python/1-1.py
+...
+ruby/1-1.rb
+...
