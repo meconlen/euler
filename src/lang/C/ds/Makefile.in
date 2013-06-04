@@ -13,7 +13,7 @@ srcdir		= @srcdir@
 
 CC		= @CC@
 CFLAGS		= @CFLAGS@ 
-CPPFLAGS	= -I../.. -I$(srcdir)/../.. @CPPFLAGS@ 
+CPPFLAGS	= -I../../../.. -I$(srcdir)/../.. @CPPFLAGS@ 
 LIBS		= @LIBS@
 
 all: queue.o
@@ -33,11 +33,11 @@ test: test.o queue.o
 check: test
 	./test
 
-Makefile: Makefile.in ../../config.status
-	cd ../.. && ./config.status src/ds/$@
+Makefile: Makefile.in ../../../../config.status
+	cd ../../../.. && ./config.status lang/C/src/ds/$@
 
-../../config.status: ../../configure
-	cd ../.. && ./config.status --recheck
+../../../../config.status: ../../../../configure
+	cd ../../../.. && ./config.status --recheck
 
 .PHONY: clean check
 
