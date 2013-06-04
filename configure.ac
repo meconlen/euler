@@ -19,7 +19,7 @@ then
 fi
 
 AC_SEARCH_LIBS([powf], [m], [], [echo "powf() not found. Cannot find math libraries"; exit -1])
-AC_SEARCH_LIBS([initscr], [ncurses], [], [echo "initscr() not found. Cannot find libncurses."; exit -1])
+#AC_SEARCH_LIBS([initscr], [ncurses], [], [echo "initscr() not found. Cannot find libncurses."; exit -1])
 AC_SEARCH_LIBS([pthread_create], [pthread], [], [echo "pthread_create() not found. Cannot find libpthread"; exit -1])
 
 AC_HEADER_STDC
