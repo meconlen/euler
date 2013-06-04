@@ -25,9 +25,9 @@ AC_SEARCH_LIBS([pthread_create], [pthread], [], [echo "pthread_create() not foun
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdio.h])
 AC_CHECK_HEADERS([stdlib.h])
-
-AC_SUBST(ATL_LIBS)
-ATL_LIBS="-lptcblas -latlas -lm -lf2c"
+AC_CHECK_HEADERS([malloc.h])
+AC_CHECK_HEADERS([sys/malloc.h])
+AC_CHECK_HEADERS([malloc/malloc.h])
 
 CUNIT_LIBS=""
 AC_SEARCH_LIBS([CU_initialize_registry], [cunit], [
@@ -35,7 +35,6 @@ AC_SEARCH_LIBS([CU_initialize_registry], [cunit], [
 	CUNIT_LIBS=-lcunit
 ], [])
 AC_SUBST(CUNIT_LIBS)
-
 
 AC_FUNC_MALLOC
 AC_FUNC_MMAP
