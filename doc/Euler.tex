@@ -231,7 +231,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		\section{Order of $F_n$}
 			We claim that the computation of \texttt{fib(n)} is at least exponential. Let $T(n)$ be the time to compute the $n^{th}$ Fibonacci number and we can see that if we let $T(0)=1$ in units of the time to make the comparison in Line 6, then $T(1)=2 > 1$ and $T(2)=2+T(1)+T(0)> T(1)+T(0)$. In general $T(n)> T(n-1)+T(n-2)$. That is, the estimate is directly related to the Fibonacci numbers themselves.
 			
-			We may use generating functions\index{generating function} to compute $F_k$. Assume there is a function $f(x)=\sum_{k=0}^\infty F_kx^k$. Recall the defining equation of the Fibonacci numbers;
+			We may use generating functions\index{generating function}\footnote{See \cite{Wilf2006,GKP94}.} to compute $F_k$. Assume there is a function $f(x)=\sum_{k=0}^\infty F_kx^k$. Recall the defining equation of the Fibonacci numbers;
 			\begin{alignat}{4}
 				F_{k+2}=F_{k+1}+F_k \label{E:2:1}
 			\end{alignat}
@@ -386,7 +386,8 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 	
 			This problem presents a few programming issues, the first is to factor an integer and find products of the factors of a given decimal size. The other is to iterate the palindrome numbers\footnote{absent any theory which short circuits these requirements.}. The numbers which result from three digit multiplication range from $10000=100\times 100$ to $998001=999\times 999$; thus we must consider representations of palindrome numbers which have an even and odd number of digits. 
 
-		
+	\bibliography{Euler}
+	\bibliographystyle{ieeetr}	
 	\printindex
 \end{spacing}
 \end{document}  
