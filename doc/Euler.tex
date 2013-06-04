@@ -364,7 +364,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 			
 			More precisely, let $n\in \mathbb{N}$ be given. Let $n_1=n$. Let $m_2\in\mathbb{N}$ be the largest number such that $2^{m_2}$ divides $n_1$; then set $n_2=\frac{n_1}{2^{m_2}}$. Inductively continue until we have a number $n_k$ such that $k>\sqrt{n_k}$. Since $\set{n_i}$ is a non-decreasing sequence this number $k$ exists. $n_k$ will then be the largest prime factor of $n$. 
 			
-			Clearly $n_k\mid n$. We can see that $n_k$ is not composite, since if it was the factors of $n_k$ would be smaller than $n_k$ and thus would have been divided out of $n_k$ at the appropriate step in the construction. We are left to prove that there is no prime $p$ such that $p>n_k$ and $p\mid n$. 
+			Clearly $n_k\mid n$. We can see that $n_k$ is not composite, since if it was the factors of $n_k$ would be smaller than $n_k$ and thus would have been divided out of $n_k$ at the appropriate step in the construction. We are left to show that there is no prime $p$ such that $p>n_k$ and $p\mid n$. This can be seen by looking at the sequence $\set{n_k}$. At each step where $n_k$ is a composite then at least one of it's prime factors is less than $\sqrt{n_k}$; thus, if there are no such prime factors then $n_k$ is prime. 
 			
 			We implement this algorithm in Listing \ref{L:3:naive.c}. 
 			
