@@ -1,0 +1,31 @@
+# @configure_input@
+
+package = @PACKAGE_NAME@
+version = @PACKAGE_VERSION@
+tarname = @PACKAGE_TARNAME@
+distdir = $(tarname)-$(version)
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+bindir		= @bindir@
+
+CC		= @CC@
+CFALGS		= @CFLAGS@ 
+CPPFLAGS	= @CPPFLAGS@ 
+
+all: 
+	$(MAKE) --directory=lang/C $@
+
+	
+clean:
+	$(MAKE) --directory=lang/C $@	
+	
+
+Makefile: Makefile.in ../config.status
+	cd .. && ./config.status src/$@
+
+../config.status: ../configure
+	cd .. && ./config.status --recheck
+
+.PHONY: clean
+

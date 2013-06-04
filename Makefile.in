@@ -1,0 +1,55 @@
+# @configure_input@
+
+package = @PACKAGE_NAME@
+version = @PACKAGE_VERSION@
+tarname = @PACKAGE_TARNAME@
+distdir = $(tarname)-$(version)
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+bindir		= @bindir@
+
+CC		= @CC@
+CFLAGS		= @CFLAGS@
+CPPFLAGS	= @CPPFLAGS@
+LIBS		= @LIBS@
+
+all clean euler:
+	$(MAKE) --directory=src $@
+
+dist: $(distdir).tar.gz
+
+$(distdir).tar.gz: $(distdir)
+	tar chof - $(distdir) | gzip -9 -c > $@
+	rm -rf $(distdir)
+
+$(distdir): FORCE
+	mkdir -p $(distdir)
+	cp Makefile.in $(distdir)
+	cp config.h.in $(distdir)
+	cp configure.ac $(distdir)
+	cp configure $(distdir)
+
+FORCE:
+	-rm $(distdir).tar.gz >/dev/null 2>&1
+	-rm -rf $(distdir) > /dev/null 2>&1
+
+distcheck: $(distdir).tar.gz
+	gzip -cd $(distdir).tar.gz | tar xpvf -
+	cd $(distdir) && CC=$(CC) CFLAGS=$(CFLAGS) CPPFLAGS=$(CPPFLAGS) ./configure
+	cd $(distdir) && $(MAKE) all
+	cd $(distdir) && $(MAKE) test
+	cd $(distdir) && $(MAKE) clean
+	rm -rf $(distdir)
+	@echo "PAckage $(distdir).tar.gz is ready for distribution."
+
+Makefile: Makefile.in config.status
+	./config.status $@
+
+config.status: configure 
+	./config.status --recheck
+
+check:
+	$(MAKE) --directory=src $@
+
+.PHONY: FORCE all clean distcheck check
