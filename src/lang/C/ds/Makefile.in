@@ -1,0 +1,43 @@
+# @configure_input@
+
+package = @PACKAGE_NAME@
+version = @PACKAGE_VERSION@
+tarname = @PACKAGE_TARNAME@
+distdir = $(tarname)-$(version)
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+bindir		= @bindir@
+
+srcdir		= @srcdir@
+
+CC		= @CC@
+CFLAGS		= @CFLAGS@ 
+CPPFLAGS	= -I../.. -I$(srcdir)/../.. @CPPFLAGS@ 
+LIBS		= @LIBS@
+
+all: queue.o
+
+queue.o: queue.c queue.h
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
+
+clean:
+	-rm -f queue.o test.o test
+
+test.o: test.c queue.h
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
+
+test: test.o queue.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
+
+check: test
+	./test
+
+Makefile: Makefile.in ../../config.status
+	cd ../.. && ./config.status src/ds/$@
+
+../../config.status: ../../configure
+	cd ../.. && ./config.status --recheck
+
+.PHONY: clean check
+
