@@ -360,13 +360,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		\end{quote}
 	
 		\section{Introduction}
-			Na\"lively we may divide $n$ by the sequence of natural numbers $\set{2, 3, 5, 7, \dots, \floor{\sqrt{n}}}$ saving the result for further computation. This removes successively larger primes from the quotient until the last is found.  
-			
-			More precisely, let $n\in \mathbb{N}$ be given. Let $n_1=n$. Let $m_2\in\mathbb{N}$ be the largest number such that $2^{m_2}$ divides $n_1$; then set $n_2=\frac{n_1}{2^{m_2}}$. Inductively continue until we have a number $n_k$ such that $k>\sqrt{n_k}$. Since $\set{n_i}$ is a non-decreasing sequence this number $k$ exists. $n_k$ will then be the largest prime factor of $n$. 
-			
-			Clearly $n_k\mid n$. We can see that $n_k$ is not composite, since if it was the factors of $n_k$ would be smaller than $n_k$ and thus would have been divided out of $n_k$ at the appropriate step in the construction. We are left to show that there is no prime $p$ such that $p>n_k$ and $p\mid n$. This can be seen by looking at the sequence $\set{n_k}$. At each step where $n_k$ is a composite then at least one of it's prime factors is less than $\sqrt{n_k}$; thus, if there are no such prime factors then $n_k$ is prime. 
-			
-			We implement this algorithm in Listing \ref{L:3:naive.c}. 
+			This algorithm works simply by factoring the integer\footnote{See Appendix \ref{C:Factoring}.} in to prime factors then searching for the largest of the list.  We implement this algorithm in Listing \ref{L:3:naive.c}. 
 			
 			\lstinputlisting[caption=Problem 3: Na\"ive Solution,label=L:3:naive.c,float=htp]{../src/lang/C/3-1.c}
 		
@@ -386,6 +380,25 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 	
 			This problem presents a few programming issues, the first is to factor an integer and find products of the factors of a given decimal size. The other is to iterate the palindrome numbers\footnote{absent any theory which short circuits these requirements.}. The numbers which result from three digit multiplication range from $10000=100\times 100$ to $998001=999\times 999$; thus we must consider representations of palindrome numbers which have an even and odd number of digits. 
 
+\appendix
+	\chapter{Factoring}\label{C:Factoring}
+		\section{Introduction}
+		
+			Factoring integers is a key component of several problems; therefore a factoring library exists to factor integers and return a list of the prime factors. The header, \texttt{factor.h}, is given in listing \ref{L:factor:factor.h}.  The code in \texttt{factor.c} is given in listing \ref{L:factor:factor.c}. 
+		
+		\section{\texttt{factorN()}}
+		
+			The function \texttt{factorN()} works by finding small factors, factoring them out and continuing to look for successively larger factors.
+		
+			More precisely, let $n\in \mathbb{N}$ be given. Let $n_1=n$. Let $m_2\in\mathbb{N}$ be the largest number such that $2^{m_2}$ divides $n_1$; then set $n_2=\frac{n_1}{2^{m_2}}$. Inductively continue until we have a number $n_k$ such that $k>\sqrt{n_k}$. Since $\set{n_i}$ is a non-decreasing sequence this number $k$ exists. $n_k$ will then be the largest prime factor of $n$. 
+			
+			Clearly $n_k\mid n$. We can see that $n_k$ is not composite, since if it was the factors of $n_k$ would be smaller than $n_k$ and thus would have been divided out of $n_k$ at the appropriate step in the construction. We are left to show that there is no prime $p$ such that $p>n_k$ and $p\mid n$. This can be seen by looking at the sequence $\set{n_k}$. At each step where $n_k$ is a composite then at least one of it's prime factors is less than $\sqrt{n_k}$; thus, if there are no such prime factors then $n_k$ is prime. 
+
+		\lstinputlisting[caption=\texttt{factor.h},label=L:factor:factor.h,float=htp]{../src/lang/C/factor.h}
+
+		\lstinputlisting[caption=\texttt{factor.c},label=L:factor:factor.c,float=htp]{../src/lang/C/factor.c}
+
+	
 	\bibliography{Euler}
 	\bibliographystyle{ieeetr}	
 	\printindex
