@@ -19,8 +19,10 @@ LIBS		= @LIBS@
 TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1
 
 all: $(TARGETS)
+	$(MAKE) --directory=ds $@
 
 clean:
+	$(MAKE) --directory=ds $@
 	-rm -f $(TARGETS)
 
 1-1: 1-1.c
