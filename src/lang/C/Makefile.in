@@ -16,7 +16,7 @@ CFLAGS		= @CFLAGS@
 CPPFLAGS	= -I../../.. -I$(srcdir)/../.. @CPPFLAGS@ 
 LIBS		= @LIBS@
 
-TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1
+TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1 4-1
 
 all: $(TARGETS)
 	$(MAKE) --directory=ds $@
@@ -43,8 +43,11 @@ clean:
 2-4: 2-4.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
 
-3-1: 3-1.c
+3-1: 3-1.c factor.c ds/queue.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
+
+4-1: 4-1.c factor.c ds/queue.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LIBS) 
 
 check: test
 	./test
