@@ -378,7 +378,56 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 		
 		\section{Introduction}
 	
-			This problem presents a few programming issues, the first is to factor an integer and find products of the factors of a given decimal size. The other is to iterate the palindrome numbers\footnote{absent any theory which short circuits these requirements.}. The numbers which result from three digit multiplication range from $10000=100\times 100$ to $998001=999\times 999$; thus we must consider representations of palindrome numbers which have an even and odd number of digits. 
+			This problem presents a few programming issues, the first is to factor an integer and find products of the factors of a given decimal size. The other problem is to be able to represent the sequence of palindrome numbers in a way that we can easily find the predecessor of an element in the sequence.
+			
+		\section{Palindrome Numbers}
+		
+			\subsection{Introduction}
+				Palindrome numbers are natural numbers which are the same when written (in a given base) forwards and reverse. These numbers can be thought of as having two varieties; those with an odd number of digits and those with an even number of digits.  We can represent a palindromic number by an integer, representing the leading sequence of the integer and a value to indicate whether the number of digits is odd or even; that is, whether the last digit in the integer should be included once or twice respectively. By way of example the palindromic number $10101$ can be represented by $(101, \mathtt{ODD})$ and the number $457754$ can be represented by $(457, \mathtt{EVEN})$. 
+		
+			\subsection{Predecessor and Successor}	
+				To see how to compute predecessor or successor palindromic numbers we consider what the sequence looks like in these terms. The first nine terms are the natural numbers $0$ through $9$. These are represented by the values $(0, \mathtt{ODD})$ through $(9, \mathtt{ODD})$. These numbers are followed by $11, 22, 33, \dots, 99$ which are represented by $(1, \mathtt{EVEN})$ through $(9, \mathtt{EVEN})$. The next portion of the sequence is 
+				\begin{alignat*}{4}
+					101, 111, 121, 131, \dots, 191, 202, 212, 222, \dots, 292, 303, \dots, 999
+				\end{alignat*}
+				These are represented by $(10, \mathtt{ODD})$ through $(99, \mathtt{ODD})$. It can be seen that the following portion of the sequence is represented by the values $(10, \mathtt{EVEN})$ through $(99, \mathtt{EVEN})$. 
+			
+				We can then consider how to compute the successor of a given palindromic number $(a, b)$, written $(a, b)++$. If $a+1\neq 10^k$ for $k\in \mathbb{N}$, $k>0$ then $(a+b)++=(a+1, b)$. That is, $(7, \mathtt{ODD})++=(8, \mathtt{ODD})$ for example. If $a+1=10^k$ for $k\in\mathbb{N}$ and $k>0$ then we have two situations depending on $b$. The successor of $(9, \mathtt{ODD})$ is $(1, \mathtt{EVEN})$, likewise $(99, \mathtt{ODD})++=(10, \mathtt{EVEN})$ and so forth; thus we see that in this case 
+				\begin{alignat*}{4}
+					(a, b)++=\left(\frac{a+1}{10}, \mathtt{EVEN}\right)
+				\end{alignat*}
+				In the case where $b=\mathtt{EVEN}$ we have $(a, b)++=(a+1, \mathtt{ODD})$. 
+			
+				We can write the successor function as 
+				\begin{alignat}{4}
+					(a, b)++=\left\{\begin{array}{ll}
+						(a+1, b),&a+1\neq 10^k,~k\in\mathbb{N},~k>0 \\
+						\left(\frac{a+1}{10}, \mathtt{EVEN}\right),&a+1=10^k,~k\in\mathbb{N},~k>0\Land b=\mathtt{ODD} \\
+						\left(a+1, \mathtt{ODD}\right),&a+1=10^k,~k\in\mathbb{N},k>0\Land b=\mathtt{EVEN}
+					\end{array}\right.
+				\end{alignat}
+			
+				From this we can compute the predecessor function $(a,b)--$, remembering to take care of a  few extra special cases. 
+				\begin{alignat}{4}
+					(a,b)--=\left\{\begin{array}{ll}
+						\mathtt{UNDEFINED},&a=0\Land b=\mathtt{ODD} \\
+						(a-1, b),&a\neq 10^k,k\in\mathbb{N},k>0 \\
+						\left(a-1, \mathtt{EVEN}\right),&a=10^k,k\in\mathbb{N},k>0\Land b=\mathtt{ODD} \\
+						\left(\left(a-1\right)\cdot 10+9, \mathtt{ODD}\right),&a=10^k,k\in\mathbb{N},k>0\Land b=\mathtt{EVEN}
+					\end{array}\right.
+				\end{alignat}
+			\subsection{Computing Integer from Representation}
+			
+				Given the representation of a palindromic number used above we need to compute the actual integer. The value $a$ represents the leading digits which must be shifted some places to the left. The number of places depends on the value of $b$. If $b=\mathtt{ODD}$ then the shift is $\floor{\log_{10}(a)}$. If $b=\mathtt{EVEN}$ then the shift is $\floor{\log_{10}(a)}+1$. 
+				
+%				We will need to know the number of digits in the integer. 
+%				\begin{alignat}{4}
+%					\mathtt{digits}((a,b))=\left\{\begin{array}{ll}
+%						\left(\floor{\log_{10}{(a)}}+1\right)\cdot 2,&b=\mathtt{EVEN} \\
+%						\floor{\log_{10}{(a)}}\cdot 2 + 1,&b=\mathtt{ODD}
+%					\end{array}\right.
+%				\end{alignat}
+
 
 \appendix
 	\chapter{Factoring}\label{C:Factoring}
