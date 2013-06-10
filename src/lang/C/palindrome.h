@@ -12,6 +12,9 @@ void	unit_palindromeSuccessor(void);
 void	unit_palindromePredecessor(void);
 #endif
 
+// b = 0 -> b = ODD
+// b = 1 -> b = EVEN
+
 typedef struct palindromeN {
 	uint64_t	a,b;
 } palindromeN;

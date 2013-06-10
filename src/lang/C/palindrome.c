@@ -22,6 +22,26 @@ int clean_palindrome(void)
 
 void unit_palindromeInteger(void)
 {
+	palindromeN 	n;
+	uint64_t	intN;
+
+	n.a = 10;
+	n.b = 0;	// odd
+	CU_ASSERT((intN = palindromeInteger(n)) == 101);
+	
+	n.a = 12;
+	n.b = 1;
+	CU_ASSERT((intN = palindromeInteger(n)) == 1221);
+
+	n.a = 123;
+	n.b = 0;
+	CU_ASSERT((intN = palindromeInteger(n)) == 12321);
+
+	n.a = 1234;
+	n.b = 1;
+	CU_ASSERT((intN = palindromeInteger(n)) == 1234321);
+	return;
+// error0:
 	CU_FAIL("no test");
 	return;
 }

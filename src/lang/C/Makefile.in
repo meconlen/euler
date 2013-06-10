@@ -44,8 +44,10 @@ test.o: test.c factor.h ds/queue.h
 4-1.o: 4-1.c
 
 4-1: 4-1.o palindrome.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
 
 test: test.o factor.o palindrome.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
 	
 check: test
 	./test
