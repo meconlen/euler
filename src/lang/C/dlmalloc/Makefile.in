@@ -1,0 +1,34 @@
+# @configure_input@
+
+package = @PACKAGE_NAME@
+version = @PACKAGE_VERSION@
+tarname = @PACKAGE_TARNAME@
+distdir = $(tarname)-$(version)
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+bindir		= @bindir@
+
+srcdir		= @srcdir@
+
+CC		= @CC@
+CFLAGS		= @CFLAGS@ 
+CPPFLAGS	= -I../../../.. -I$(srcdir)/../.. @CPPFLAGS@ 
+LIBS		= @LIBS@
+
+all: dlmalloc.o
+
+queue.o: dlmalloc.c dlmalloc.h
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
+
+clean:
+	-rm -f dlmalloc.o
+
+Makefile: Makefile.in ../../../../config.status
+	cd ../../../.. && ./config.status src/lang/C/dlmalloc/$@
+
+../../../../config.status: ../../../../configure
+	cd ../../../.. && ./config.status --recheck
+
+.PHONY: clean check
+
