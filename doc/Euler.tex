@@ -420,6 +420,8 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 			
 				Given the representation of a palindromic number used above we need to compute the actual integer. The value $a$ represents the leading digits which must be shifted some places to the left. The number of places depends on the value of $b$. If $b=\mathtt{ODD}$ then the shift is $\floor{\log_{10}(a)}$. If $b=\mathtt{EVEN}$ then the shift is $\floor{\log_{10}(a)}+1$. 
 				
+				We might attempt to figure out the value of each place in decimal; but this has been done already by \texttt{sprintf()}. We simply determine the length of $a$, $\mathtt{digits}(a)=\floor{\log_{10}(a)}+1$ to determine the length of the string necessary, $\mathtt{length}(a)+1$, then use \texttt{sprintf()} to place the integer into the string, then treating each character as an integer subtract the value of the string "0" from each value. 
+				
 %				We will need to know the number of digits in the integer. 
 %				\begin{alignat}{4}
 %					\mathtt{digits}((a,b))=\left\{\begin{array}{ll}
@@ -430,7 +432,7 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 
 
 \appendix
-	\chapter{Factoring}\label{C:Factoring}
+	\chapter{Factoring Integers}\label{C:Factoring}
 		\section{Introduction}
 		
 			Factoring integers is a key component of several problems; therefore a factoring library exists to factor integers and return a list of the prime factors. The header, \texttt{factor.h}, is given in listing \ref{L:factor:factor.h}.  The code in \texttt{factor.c} is given in listing \ref{L:factor:factor.c}. 
