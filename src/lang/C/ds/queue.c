@@ -1,13 +1,6 @@
 // includes //
 #include <config.h>
 #include <errno.h>
-/*
-#ifdef HAVE_MALLOC_H 
-	#include <malloc.h>
-#elif defined  HAVE_SYS_MALLOC_H
-	#include <sys/malloc.h>
-#endif
-*/
 
 #include "../dlmalloc/dlmalloc.h"
 
