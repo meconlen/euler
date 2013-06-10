@@ -14,40 +14,34 @@ srcdir		= @srcdir@
 CC		= @CC@
 CFLAGS		= @CFLAGS@ 
 CPPFLAGS	= -I../../.. -I$(srcdir)/../.. @CPPFLAGS@ 
-LIBS		= @LIBS@
+LIBS		= @LIBS@ ds/queue.o dlmalloc/dlmalloc.o
 
 TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1 4-1
+SUBDIRS		= dlmalloc ds
 
 all: $(TARGETS)
 	$(MAKE) --directory=ds $@
 
 clean:
 	$(MAKE) --directory=ds $@
+	$(MAKE) --directory=dlmalloc $@
 	-rm -f $(TARGETS)
 
-1-1: 1-1.c
+$(SUBDIRS):
+	$(MAKE) --directory=$@
+
+%.o: %.c $(SUBDIRS)
+	$(CC) -c $(CPPFLAGS) -o $@ $< 
+
+%: %.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
 
-1-2: 1-2.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
+test.o: test.c factor.h ds/queue.h
 
-2-1: 2-1.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
+3-1: factor.o
 
-2-2: 2-2.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
-
-2-3: 2-3.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
-
-2-4: 2-4.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
-
-3-1: 3-1.c factor.c ds/queue.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LIBS) 
-
-4-1: 4-1.c factor.c ds/queue.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LIBS) 
+test: test.o factor.o ds/queue.o dlmalloc/dlmalloc.o
+	
 
 check: test
 	./test
@@ -58,5 +52,5 @@ Makefile: Makefile.in ../../../config.status
 ../../../config.status: ../../../configure
 	cd ../../.. && ./config.status --recheck
 
-.PHONY: clean check
+.PHONY: clean check subdirs $(SUBDIRS)
 

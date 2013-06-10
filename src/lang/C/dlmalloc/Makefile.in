@@ -16,28 +16,19 @@ CFLAGS		= @CFLAGS@
 CPPFLAGS	= -I../../../.. -I$(srcdir)/../.. @CPPFLAGS@ 
 LIBS		= @LIBS@
 
-all: queue.o
+all: dlmalloc.o
 
-queue.o: queue.c queue.h ../dlmalloc/dlmalloc.h
+queue.o: dlmalloc.c dlmalloc.h
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
 
 clean:
-	-rm -f queue.o test.o test
-
-test.o: test.c queue.h ../dlmalloc/dlmalloc.h
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
-
-test: test.o queue.o ../dlmalloc/dlmalloc.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
-
-check: test
-	./test
+	-rm -f dlmalloc.o
 
 Makefile: Makefile.in ../../../../config.status
-	cd ../../../.. && ./config.status src/lang/C/ds/$@
+	cd ../../../.. && ./config.status src/lang/C/dlmalloc/$@
 
 ../../../../config.status: ../../../../configure
 	cd ../../../.. && ./config.status --recheck
 
-.PHONY: clean check all
+.PHONY: clean check
 

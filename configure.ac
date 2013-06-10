@@ -43,6 +43,7 @@ AC_CHECK_FUNCS([fstat])
 
 AC_CONFIG_FILES([Makefile
 	src/Makefile
+	src/lang/C/dlmalloc/Makefile
 	src/lang/C/ds/Makefile
 	src/lang/C/Makefile])
 

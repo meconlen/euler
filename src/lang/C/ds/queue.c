@@ -1,11 +1,8 @@
 // includes //
 #include <config.h>
 #include <errno.h>
-#ifdef HAVE_MALLOC_H 
-	#include <malloc.h>
-#elif defined  HAVE_SYS_MALLOC_H
-	#include <sys/malloc.h>
-#endif
+
+#include "../dlmalloc/dlmalloc.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -154,8 +151,8 @@ void unit_queueCopy(void)
 	queueDestroy(r);
 	emi = mallinfo();
 	CU_ASSERT(smi.uordblks == emi.uordblks);
-	if(smi.uordblks != emi.uordblks) printf("smi.uordblks = %d, emi.uordblks = %d, diff = %d\n", smi.uordblks,
-		emi.uordblks, emi.uordblks - smi.uordblks);
+	if(smi.uordblks != emi.uordblks) printf("smi.uordblks = %d, emi.uordblks = %d, diff = %d\n", 
+		(int)smi.uordblks, (int)emi.uordblks, (int)(emi.uordblks - smi.uordblks));
 	for(i=0; i<4; i++) queueDequeue(q);
 	queueDestroy(q);
 	return;
