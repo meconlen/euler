@@ -18,16 +18,16 @@ LIBS		= @LIBS@
 
 all: queue.o
 
-queue.o: queue.c queue.h
+queue.o: queue.c queue.h ../dlmalloc/dlmalloc.h
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
 
 clean:
 	-rm -f queue.o test.o test
 
-test.o: test.c queue.h
+test.o: test.c queue.h ../dlmalloc/dlmalloc.h
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
 
-test: test.o queue.o
+test: test.o queue.o ../dlmalloc/dlmalloc.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
 
 check: test
@@ -39,5 +39,5 @@ Makefile: Makefile.in ../../../../config.status
 ../../../../config.status: ../../../../configure
 	cd ../../../.. && ./config.status --recheck
 
-.PHONY: clean check
+.PHONY: clean check all
 
