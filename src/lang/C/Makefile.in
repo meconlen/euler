@@ -20,12 +20,11 @@ TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1 4-1
 SUBDIRS		= dlmalloc ds
 
 all: $(TARGETS)
-	$(MAKE) --directory=ds $@
 
 clean:
 	$(MAKE) --directory=ds $@
 	$(MAKE) --directory=dlmalloc $@
-	-rm -f $(TARGETS)
+	-rm -f $(TARGETS) *.o
 
 $(SUBDIRS):
 	$(MAKE) --directory=$@
@@ -38,11 +37,16 @@ $(SUBDIRS):
 
 test.o: test.c factor.h ds/queue.h
 
-3-1: factor.o
+3-1.o: 3-1.c
 
-test: test.o factor.o ds/queue.o dlmalloc/dlmalloc.o
+3-1: 3-1.o factor.o 
+
+4-1.o: 4-1.c
+
+4-1: 4-1.o palindrome.o
+
+test: test.o factor.o palindrome.o
 	
-
 check: test
 	./test
 
