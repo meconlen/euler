@@ -43,6 +43,7 @@ error0:
 }
 #endif
 
+// factorN //
 int factorN(unsigned long long n, unsigned long long **list, unsigned long long *len) 
 {
 	unsigned long long	sn, i, *f;
@@ -79,3 +80,4 @@ int factorN(unsigned long long n, unsigned long long **list, unsigned long long 
 	queueDestroy(q);
 	return(0);
 }
+// end factorN //
