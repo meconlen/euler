@@ -380,10 +380,10 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 	
 			This problem presents a few programming issues, the first is to factor an integer and find products of the factors of a given decimal size. The other problem is to be able to represent the sequence of palindrome numbers in a way that we can easily find the predecessor of an element in the sequence.
 			
-		\section{Palindrome Numbers}
+		\section{Palindromic Numbers}
 		
 			\subsection{Introduction}
-				Palindrome numbers are natural numbers which are the same when written (in a given base) forwards and reverse. These numbers can be thought of as having two varieties; those with an odd number of digits and those with an even number of digits.  We can represent a palindromic number by an integer, representing the leading sequence of the integer and a value to indicate whether the number of digits is odd or even; that is, whether the last digit in the integer should be included once or twice respectively. By way of example the palindromic number $10101$ can be represented by $(101, \mathtt{ODD})$ and the number $457754$ can be represented by $(457, \mathtt{EVEN})$. 
+				Palindromic numbers\index{palindromic number} are natural numbers which are the same when written (in a given base) forwards and reverse. These numbers can be thought of as having two varieties; those with an odd number of digits and those with an even number of digits.  We can represent a palindromic number by an integer, representing the leading sequence of the integer and a value to indicate whether the number of digits is odd or even; that is, whether the last digit in the integer should be included once or twice respectively. By way of example the palindromic number $10101$ can be represented by $(101, \mathtt{ODD})$ and the number $457754$ can be represented by $(457, \mathtt{EVEN})$. 
 		
 			\subsection{Predecessor and Successor}	
 				To see how to compute predecessor or successor palindromic numbers we consider what the sequence looks like in these terms. The first nine terms are the natural numbers $0$ through $9$. These are represented by the values $(0, \mathtt{ODD})$ through $(9, \mathtt{ODD})$. These numbers are followed by $11, 22, 33, \dots, 99$ which are represented by $(1, \mathtt{EVEN})$ through $(9, \mathtt{EVEN})$. The next portion of the sequence is 
@@ -406,21 +406,31 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 						\left(a+1, \mathtt{ODD}\right),&a+1=10^k,~k\in\mathbb{N},k>0\Land b=\mathtt{EVEN}
 					\end{array}\right.
 				\end{alignat}
-			
-				From this we can compute the predecessor function $(a,b)--$, remembering to take care of a  few extra special cases. 
+				This function is implemented in \texttt{palindromeSuccessor()} given in Listing \ref{L:palindrome:palindromeSuccessor}. 
+				\lstinputlisting[linerange=palindromeSuccessor-end\ palindromeSuccessor,caption=Problem 4: \texttt{palindromeSuccessor()},label=L:palindrome:palindromeSuccessor,float=htp]{../src/lang/C/palindrome.c}
+				
+				From the successor we can compute the predecessor function $(a,b)--$, remembering to take care of a  few extra special cases. 
 				\begin{alignat}{4}
 					(a,b)--=\left\{\begin{array}{ll}
 						\mathtt{UNDEFINED},&a=0\Land b=\mathtt{ODD} \\
+						\left(a-1, \mathtt{ODD}\right),&a=1\Land b=\mathtt{ODD} \\
 						(a-1, b),&a\neq 10^k,k\in\mathbb{N},k>0 \\
 						\left(a-1, \mathtt{EVEN}\right),&a=10^k,k\in\mathbb{N},k>0\Land b=\mathtt{ODD} \\
-						\left(\left(a-1\right)\cdot 10+9, \mathtt{ODD}\right),&a=10^k,k\in\mathbb{N},k>0\Land b=\mathtt{EVEN}
+						\left(\left(a-1\right)\cdot 10+9, \mathtt{ODD}\right),&a=10^k,k\in\mathbb{N}\Land b=\mathtt{EVEN}
 					\end{array}\right.
 				\end{alignat}
+
+				\lstinputlisting[linerange=palindromePredecessor-end\ palindromePredecessor,caption=Problem 4: \texttt{palindromePredecessor()},label=L:palindrome:palindromePredecessor,float=htp]{../src/lang/C/palindrome.c}
+
 			\subsection{Computing Integer from Representation}
 			
 				Given the representation of a palindromic number used above we need to compute the actual integer. The value $a$ represents the leading digits which must be shifted some places to the left. The number of places depends on the value of $b$. If $b=\mathtt{ODD}$ then the shift is $\floor{\log_{10}(a)}$. If $b=\mathtt{EVEN}$ then the shift is $\floor{\log_{10}(a)}+1$. 
 				
 				We might attempt to figure out the value of each place in decimal; but this has been done already by \texttt{sprintf()}. We simply determine the length of $a$, $\mathtt{digits}(a)=\floor{\log_{10}(a)}+1$ to determine the length of the string necessary, $\mathtt{length}(a)+1$, then use \texttt{sprintf()} to place the integer into the string, then treating each character as an integer subtract the value of the string "0" from each value. 
+				
+				The function \texttt{palindromeInteger()} in Listing \ref{L:palindrome:palindromeInteger} implements this. 
+				
+				\lstinputlisting[linerange=palindromeInteger-end\ palindromeInteger,caption=Problem 4: \texttt{palindromeInteger()},label=L:palindrome:palindromeInteger,float=htp]{../src/lang/C/palindrome.c}
 				
 %				We will need to know the number of digits in the integer. 
 %				\begin{alignat}{4}

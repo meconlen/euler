@@ -15,8 +15,13 @@ void	unit_palindromePredecessor(void);
 // b = 0 -> b = ODD
 // b = 1 -> b = EVEN
 
+#define PALINDROME_ODD	0
+#define PALINDROME_EVEN	1
+#define PALINDROME_UNDEF -1
+
 typedef struct palindromeN {
-	uint64_t	a,b;
+	uint64_t	a;
+	int64_t		b;
 } palindromeN;
 
 uint64_t	palindromeInteger(palindromeN n);
