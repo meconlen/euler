@@ -431,14 +431,12 @@ Project Euler, \url{http://projecteuler.net/}, is a list of programming problems
 				The function \texttt{palindromeInteger()} in Listing \ref{L:palindrome:palindromeInteger} implements this. 
 				
 				\lstinputlisting[linerange=palindromeInteger-end\ palindromeInteger,caption=Problem 4: \texttt{palindromeInteger()},label=L:palindrome:palindromeInteger,float=htp]{../src/lang/C/palindrome.c}
+
+			\subsection{Finding an Answer}
+			
+				Given that we can find the largest palindromic integer less than a given number\footnote{Using the free digits at the start of the integer find the palindromic integer associated with it. Either it satisfies the inequality, at which point any palindromic integer larger than it will not satisfy the inequality, or it's predecessor will satisfy the inequality.} we must determine if it satisfies the condition that it is the product of two integers of a given length. To do this we may start by factoring the integer into a list of $m$ prime factors. Then we can determine if any grouping of the prime factors into to integers will have products of the required length. There are $\sum_{k=0}^m\binom{m}{k}=2^m$ ways to group $m$ prime factors into two groups where we choose $k$ of them for one product and the remaining $m-k$ are in the other product. By enumerating over these $2^m$ groupings we can determine if any grouping satisfies by computation. 
 				
-%				We will need to know the number of digits in the integer. 
-%				\begin{alignat}{4}
-%					\mathtt{digits}((a,b))=\left\{\begin{array}{ll}
-%						\left(\floor{\log_{10}{(a)}}+1\right)\cdot 2,&b=\mathtt{EVEN} \\
-%						\floor{\log_{10}{(a)}}\cdot 2 + 1,&b=\mathtt{ODD}
-%					\end{array}\right.
-%				\end{alignat}
+				This algorithm appears inefficient, possibly even exponential, at first glance; however it should not be too bad. Let $n$ be given. We may write $n=\prod_p p^{k_p}$ where $p$ ranges over all prime numbers and $k_p=0$ if $p\not\mid n$. The number of prime factors $m(n)$ is given by $m(n)=\sum k_p$. We can understand the growth of $m$ by inverting it. The smallest integer which has $x$ prime factors is $2^x$ since any integer which has as many prime factors must have some factor(s) which are not $2$ and all prime numbers not equal to $2$ are greater than $2$. $m\left(2^x\right)=x$; thus the growth of $m$ is $\log_2(n)$; thus an upper bound on the number of groupings we must check for each $n$ is $2^{\log_2(n)}=n$. Summing over all $n$ we have that the algorithm is $O\left(n^2\right)$. 
 
 
 \appendix
