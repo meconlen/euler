@@ -51,10 +51,10 @@ void unit_factorN(void)
 			for(j=0; j<len; j++) fprintf(stderr, " %llu, ", list[j]);
 			fprintf(stderr, "\n");
 		}
-		
 		for(j=0; j<len; j++) {
-			CU_ASSERT(list[i] == 2);
+			CU_ASSERT(list[j] == 2);
 		}
+		free(list);
 	}
 
 	return;	
