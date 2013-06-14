@@ -5,7 +5,7 @@
 #include "palindrome.h"
 #include "factor.h"
 
-in main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	char				copt, *str;	
 	uint64_t			strlen = 0, halfLen = 0, len = 0, n = 0, x = 0, y = 0, i=0;
