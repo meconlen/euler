@@ -1,6 +1,7 @@
 #include <config.h>
 
 #include <math.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include "ds/queue.h"
 
@@ -23,20 +24,39 @@ int clean_factor(void)
 
 void unit_factorN(void)
 {
-	unsigned long long *list = NULL, len = 0, rc;
+	unsigned long long	*list = NULL, len = 0, rc;
+	uint64_t		i, j;
 
 	CU_ASSERT((rc = factorN(2310, &list, &len)) == 0);
 	if(rc != 0) goto error0;
 	CU_ASSERT_PTR_NOT_NULL(list)
 	if(list == NULL) goto error0;
 	CU_ASSERT(len != 0);
-	if(len == 5) goto error1;
+	if(len != 5) goto error1;
 	CU_ASSERT(list[0] == 2);
 	CU_ASSERT(list[1] == 3);
 	CU_ASSERT(list[2] == 5);
 	CU_ASSERT(list[3] == 7);
 	CU_ASSERT(list[4] == 11);
 	free(list);
+
+	for(i=1; i<64; i++) {
+		CU_ASSERT((rc = factorN((uint64_t)1<<i, &list, &len)) == 0);
+		if(rc != 0) continue;
+		CU_ASSERT_PTR_NOT_NULL(list);
+		if(list == NULL) continue;
+		CU_ASSERT(len == i);
+		if(len != i) {
+			fprintf(stderr, "err, for int %llu, len should be %llu, len = %llu: ", (uint64_t)1 << i, i, len);
+			for(j=0; j<len; j++) fprintf(stderr, " %llu, ", list[j]);
+			fprintf(stderr, "\n");
+		}
+		
+		for(j=0; j<len; j++) {
+			CU_ASSERT(list[i] == 2);
+		}
+	}
+
 	return;	
 error1:
 	free(list);
@@ -69,9 +89,11 @@ int factorN(unsigned long long n, unsigned long long **list, unsigned long long 
 			sn = sqrt(n);	
 		}
 	}
-	f = malloc(sizeof(unsigned long long));
-	*f = n;
-	queueEnqueue(q, f);
+	if(n != 1) {
+		f = malloc(sizeof(unsigned long long));
+		*f = n;
+		queueEnqueue(q, f);
+	}
 	*len = queueLength(q);
 	*list = malloc(sizeof(unsigned long long) * (*len));
 	for(i=0; i< *len; i++) {
