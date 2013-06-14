@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 		}
 		palindromePredecessor(&p);
 	}	
-
+	printf("found no solutions\n");
 done: 
 	exit(0);
 error0:
