@@ -443,8 +443,19 @@ While Project Euler requests that the solutions not be shared outside of the for
 				
 				The function \texttt{twoFactor()} takes a list of (presumably prime) factors and an integer $n$ such that $2^n$ is less than the length of the list and groups the prime factors. The code is given in Listing \ref{L:factor:twoFactor}. 
 
-
-
+				In short, the algorithm is as follows
+				\begin{enumerate}
+					\item	Find largest palindromic number less than $999\times 999$
+					\item	For each palindromic number less than $999\times 999$ down to $100\times 100$ do:
+						\begin{enumerate}
+							\item Factor the palindromic integer
+							\item For each grouping of the factors determine if the grouping results in a pair of $3$-digit numbers; if so terminate 
+						\end{enumerate}
+				\end{enumerate}
+				The code for this is given in Listing \ref{L:4-1.c}
+				\begin{spacing}{1}
+				\lstinputlisting[caption=Problem 4: \texttt{main()},label=L:4-1.c,]{../src/lang/C/4-1.c}
+				\end{spacing}
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
 		\section{Introduction}
