@@ -63,6 +63,14 @@ error1:
 error0:
 	return;
 }
+
+// int twoFactor(uint64_t *list, uint64_t len, uint64_t &x, uint64_t &y)
+
+void unit_twoFactor(void)
+{
+	CU_FAIL("no test");
+	return;
+}
 #endif
 
 // factorN //
@@ -105,3 +113,9 @@ int factorN(unsigned long long n, unsigned long long **list, unsigned long long 
 	return(0);
 }
 // end factorN //
+
+
+int twoFactor(uint64_t *list, uint64_t len, uint64_t *x, uint64_t *y, uint64_t n) 
+{
+	return(-1);
+}

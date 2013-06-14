@@ -21,6 +21,7 @@ int main()
 
 	if((factorSuite = CU_add_suite("factor", init_factor, clean_factor)) == NULL) goto error1;
 	if((CU_add_test(factorSuite, "factorN()", unit_factorN)) == NULL) goto error1;
+	if((CU_add_test(factorSuite, "twoFactor()", unit_twoFactor)) == NULL) goto error1;
 
 	if((palindromeSuite = CU_add_suite("palindrome", init_palindrome, clean_palindrome)) == NULL) goto error1;
 	if((CU_add_test(palindromeSuite, "palindromeInteger", unit_palindromeInteger)) == NULL) goto error1;
