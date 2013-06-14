@@ -31,7 +31,7 @@ void unit_factorN(void)
 	if(rc != 0) goto error0;
 	CU_ASSERT_PTR_NOT_NULL(list)
 	if(list == NULL) goto error0;
-	CU_ASSERT(len != 0);
+	CU_ASSERT(len == 5);
 	if(len != 5) goto error1;
 	CU_ASSERT(list[0] == 2);
 	CU_ASSERT(list[1] == 3);
@@ -40,6 +40,19 @@ void unit_factorN(void)
 	CU_ASSERT(list[4] == 11);
 	free(list);
 
+	CU_ASSERT((rc = factorN(9009, &list, &len)) == 0);
+	if(rc != 0) goto error0;
+	CU_ASSERT_PTR_NOT_NULL(list);
+	if(list == NULL) goto error0;
+	CU_ASSERT(len == 5);
+	if(len != 5) goto error1;
+	CU_ASSERT(list[0] == 3);
+	CU_ASSERT(list[1] == 3);
+	CU_ASSERT(list[2] == 7);
+	CU_ASSERT(list[3] == 11);
+	CU_ASSERT(list[4] == 13);
+	free(list);
+return;
 	for(i=1; i<64; i++) {
 		CU_ASSERT((rc = factorN((uint64_t)1<<i, &list, &len)) == 0);
 		if(rc != 0) continue;
@@ -61,6 +74,7 @@ void unit_factorN(void)
 error1:
 	free(list);
 error0:
+	CU_FAIL("tests skipped on error\n");
 	return;
 }
 
@@ -109,7 +123,7 @@ int factorN(unsigned long long n, unsigned long long **list, unsigned long long 
 		n = n >> 1;	
 	}	
 	sn = sqrt(n);
-	for(i=3; i<sn; i+=2) {
+	for(i=3; i<=sn; i+=2) {
 		while(n%i == 0) {
 			f = malloc(sizeof(unsigned long long));
 			*f = i;
