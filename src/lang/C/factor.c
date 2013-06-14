@@ -137,7 +137,7 @@ error0:
 }
 // end factorN //
 
-
+// twoFactor //
 int twoFactor(uint64_t *list, uint64_t len, uint64_t *x, uint64_t *y, uint64_t n) 
 {
 	uint64_t	i;
@@ -150,3 +150,4 @@ int twoFactor(uint64_t *list, uint64_t len, uint64_t *x, uint64_t *y, uint64_t n
 error0: 
 	return(-1);
 }
+// end twoFactor //
