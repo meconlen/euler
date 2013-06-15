@@ -52,7 +52,6 @@ void unit_factorN(void)
 	CU_ASSERT(list[3] == 11);
 	CU_ASSERT(list[4] == 13);
 	free(list);
-return;
 	for(i=1; i<64; i++) {
 		CU_ASSERT((rc = factorN((uint64_t)1<<i, &list, &len)) == 0);
 		if(rc != 0) continue;
