@@ -8,7 +8,9 @@
 int	init_algebra(void);
 int	clean_algebra(void);
 void	unit_gcd(void);
+void	unit_lcm(void);
 #endif
 
 uint64_t gcd(uint64_t a, uint64_t b);
+uint64_t lcm(uint64_t a, uint64_t b);
 #endif

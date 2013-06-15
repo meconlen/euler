@@ -35,15 +35,36 @@ void unit_gcd(void)
 	a = 15;
 	b = 30;
 	CU_ASSERT((g = gcd(a,b)) == 15);
-	
 	return;
 
 // error0:
 	CU_FAIL("no tests");
 	return;
 }
+
+void unit_lcm(void)
+{
+	uint64_t	a, b, l;
+
+	a = 10;
+	b = 4;
+	CU_ASSERT((l = lcm(a, b)) == 20);
+	a = 30;
+	b = 15;
+	CU_ASSERT((l = lcm(a,b)) == 30);
+	a = 15;
+	b = 30;
+	CU_ASSERT((l = lcm(a,b)) == 30);
+	return;
+
+// error0:
+	CU_FAIL("no tests");
+	return;
+}
+
 #endif
 
+// gcd //
 uint64_t gcd(uint64_t a, uint64_t b)
 {
 	uint64_t	t;
@@ -54,3 +75,11 @@ uint64_t gcd(uint64_t a, uint64_t b)
 	}
 	return(a);
 }
+// end gcd //
+
+// lcm //
+uint64_t lcm(uint64_t a, uint64_t b)
+{
+	return((a*b)/gcd(a, b));
+}	
+// end lcm //

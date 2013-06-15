@@ -520,8 +520,16 @@ While Project Euler requests that the solutions not be shared outside of the for
 				&\dots \\
 				r_{n-2}&=r_{n-1}q_n+r_n
 			\end{alignat*}
-			By Euclidean Division we can see that the sequence $\set{r_k}$ is decreasing and this procedure terminates when $r_n=0$. We can see then from the equations that $r_{n-1}$ divides $a$ and $b$ by noting that since $r_n=0$ then $r_{n-1}\mid r_{n-1}q_n=r_{n-2}$ and work up the ladder.  Let $c$ be any number that divides $a$ and $b$; then by the first equation $c\mid r_0$, and so forth we see that $c\mid r_k$ for all $k<n$; in particular $c\mid r_{n-1}$; so $c\leq r_{n-1}$ and $r_{n-1}=\gcd{(a,b)}$. 
+			By Euclidean Division we can see that the sequence $\set{r_k}$ is decreasing and this procedure terminates when $r_n=0$. We can see then from the equations that $r_{n-1}$ divides $a$ and $b$ by noting that since $r_n=0$ then $r_{n-1}\mid r_{n-1}q_n=r_{n-2}$ and work up the ladder.  Let $c$ be any number that divides $a$ and $b$; then by the first equation $c\mid r_0$, and so forth we see that $c\mid r_k$ for all $k<n$; in particular $c\mid r_{n-1}$; so $c\leq r_{n-1}$ and $r_{n-1}=\gcd{(a,b)}$. This algorithm is implemented in Listing \ref{L:algebra:gcd}. 
 			
+			\lstinputlisting[linerange=gcd-end\ gcd,caption=Problem 5: \texttt{gcd()},label=L:algebra:gcd,float=]{../src/lang/C/algebra.c}
+			
+		\section{Solution}
+		
+			\lstinputlisting[linerange=lcm-end\ lcm,caption=Problem 5: \texttt{lcm()},label=L:algebra:lcm,float=]{../src/lang/C/algebra.c}
+			The solution depends on the \texttt{gcd()} function in Listing \ref{L:algebra:gcd}. Additionally we implement the $\lcm$ in Listing \ref{L:algebra:lcm}. We iterate over the integers as shown in \texttt{main()} in Listing 
+			
+			\lstinputlisting[caption=Problem 5: \texttt{main()},label=L:5-1,float=]{../src/lang/C/5-1.c}
 	
 	\chapter{Sum Square Difference}
 	
