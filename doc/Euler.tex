@@ -1,3 +1,8 @@
+% Notes
+% 7.2 Sieve of Eratosthenes needs some citations
+% 7: understand Lambert's W function to solve x/log(x)=ax
+%
+
 \documentclass[oneside,12pt]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
 \usepackage{savesym}
 \usepackage{amsmath}
@@ -643,7 +648,51 @@ While Project Euler requests that the solutions not be shared outside of the for
 			
 			\lstinputlisting[linerange=SSD-end\ SSD,caption=Problem 6: \texttt{SSD()},label=L:SSD:SSD,float=htp]{../src/lang/C/6-1.c}
 	
+	\chapter{The $n^{th}$ Prime Number}
+	
+		\begin{quote}
+			By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+			What is the 10 001st prime number?
+		\end{quote}
 		
+		\section{Introduction}
+		
+			The distribution of primes is known to be irregular. Yitang Zhang has shown that there are infinitely many pairs of consecutive primes such that the difference between them is less than $7\times 10^7$ \cite{Zhang2013}; that is, if $p_k$ is the $k^{th}$ prime number that 
+			\begin{alignat}{4}
+				\liminf_{n\to\infty}(p_{n+1}-p_n)<7\times 10^7
+			\end{alignat}
+			
+			 Guass conjectured and Hadamard and Poussin later proved a result concerning the prime counting function $\pi(x)$ where $\pi(x)$ is the number of primes less than $x$. The theorem is known as the Prime Number Theorem \cite{Andrews1971}.
+
+			\begin{thm}[Prime Number Theorem]
+				\begin{alignat}{4}
+					\lim_{x\to\infty}\frac{\pi(x)}{\frac{x}{\log{(x)}}}=1
+				\end{alignat} 
+			\end{thm}
+			If follows from this that 
+			\begin{alignat}{4}
+				\limsup_{x\to\infty}(p_{n+1}-p_n) = \infty
+			\end{alignat}
+			since $\frac{\pi(x)}{x}\to 0$ as $x\to \infty$. These results show that finding the $n^{th}$ prime number is difficult. The na\"ive solution would be to check each natural number $k$ in succession testing it for primality by dividing it by every prime found less than $\sqrt{k}$. For small natural numbers, say $n=10001$ this isn't too bad; however for very large natural numbers the divisions becomes expensive\footnote{Multiplication is practically $O(n\log{(n)}\log{(\log{(n)})}$ while addition is $O(\log{(n)})$. }. 
+			
+		\section{Sieve of Eratosthenes}\index{Sieve of Eratosthenes}
+		
+			Suppose we wish to determine all the prime numbers less than a given natural number, say $x$. We can list all the natural numbers unto $x$. We know that $2$ is the first prime number so we can remove all multiples of $2$ from the list, that is, $\set{4, 6, 8, \dots}$. The next number remaining is $3$, which we determine to be prime and we remove all multiples of three from the list, $\set{6, 9, 12, \dots}$. We then find $5$ and continue as before. If we have the memory this method works well and only involves addition rather than the more expensive multiplication. The time complexity of the algorithm is $O(n\log{(\log{(n)})})$ at register size and $O(n\log{(n)}\log{(\log{(n)})})$ in bit complexity for large numbers\footnote{Compare to the bit complexity of multiplication.}. 
+			
+			With the Sieve of Eratosthenes we need an estimate of where the $n^{th}$ prime number may be found. While the Prime Number Theorem estimates the density we must be wary to undershooting $x$\footnote{We can imagine techniques which would allow us to extend and continue if we did undershoot these turn out to be unnecessary.}. Before the Prime Number Theorem was proven Chebychev proved a weaker result which provides upper and lower bounds on $\pi(x)$. 
+			\begin{thm}[Chebychev's Theorem]\label{T:7:1}
+				For $x\geq 8$
+				\begin{alignat}{4}
+					\frac{\log{(2)}}{4}\cdot \frac{x}{\log{(x)}} \leq \pi(x) \leq 30(\log{(2)})\frac{x}{\log{(x)}}
+				\end{alignat}
+			\end{thm}
+			However, for $n=10001$ these bounds tell us $x\in(3987, 783242)$. More recently Pierre Duscart proves stricter bounds\cite{Duscart1998}. The bounds are
+			\begin{alignat}{4}
+				\left(1+\frac{1}{\log{(x)}}\right)\frac{x}{\log{(x)}} \leq \pi(x)\leq\left(1+\frac{1.2762}{\log{(x)}}\right)\frac{x}{\log{(x)}}
+			\end{alignat}
+			where the first bound is valid for $x\geq 599$\footnote{Duscart provides more precise bounds for larger $x$.}. These bounds give an estimate of $x\in(104044, 106571)$. This provides a nice upper bound to work with. 
+			
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
 		\section{Introduction}
