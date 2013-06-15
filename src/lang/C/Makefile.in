@@ -16,7 +16,7 @@ CFLAGS		= @CFLAGS@
 CPPFLAGS	= -I../../.. -I$(srcdir)/../.. @CPPFLAGS@ 
 LIBS		= @LIBS@ ds/queue.o dlmalloc/dlmalloc.o
 
-TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1 4-1
+TARGETS		= 1-1 1-2 2-1 2-2 2-3 2-4 3-1 4-1 5-1
 SUBDIRS		= dlmalloc ds
 
 all: $(TARGETS)
@@ -45,6 +45,8 @@ test.o: test.c factor.h ds/queue.h
 
 4-1: 4-1.o palindrome.o factor.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
+
+5-1: 5-1.o algebra.o
 
 test: test.o factor.o palindrome.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
