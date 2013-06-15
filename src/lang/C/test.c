@@ -12,16 +12,22 @@
 #include "factor.h"
 #include "palindrome.h"
 #include "algebra.h"
+#include "sieve.h"
 
 int main() 
 {
 #if HAVE_CUNIT_CUNIT_H
-	CU_pSuite factorSuite = NULL, palindromeSuite = NULL, algebraSuite = NULL;
+	CU_pSuite factorSuite = NULL, palindromeSuite = NULL, algebraSuite = NULL, sieveSuite = NULL;
 
 	if(CU_initialize_registry() != CUE_SUCCESS) goto error0;
 
+	if((sieveSuite = CU_add_suite("sieve", init_sieve, clean_sieve)) == NULL) goto error1;
+	if((CU_add_test(sieveSuite, "sieveE()", unit_sieveE)) == NULL) goto error1;
+	if((CU_add_test(sieveSuite, "findBound()", unit_findBound)) == NULL) goto error1;
+
 	if((algebraSuite = CU_add_suite("algebra", init_algebra, clean_algebra)) == NULL) goto error1;
 	if((CU_add_test(algebraSuite, "gcd()", unit_gcd)) == NULL) goto error1;
+	if((CU_add_test(algebraSuite, "lcm()", unit_lcm)) == NULL) goto error1;
 	
 	if((factorSuite = CU_add_suite("factor", init_factor, clean_factor)) == NULL) goto error1;
 	if((CU_add_test(factorSuite, "factorN()", unit_factorN)) == NULL) goto error1;

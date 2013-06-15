@@ -48,7 +48,9 @@ test.o: test.c factor.h ds/queue.h
 
 5-1: 5-1.o algebra.o
 
-test: test.o factor.o palindrome.o sieve.o
+7-1: 7-1.o sieve.o 
+
+test: test.o factor.o palindrome.o algebra.o sieve.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
 	
 check: test

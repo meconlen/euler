@@ -1,6 +1,5 @@
 % Notes
 % 7.2 Sieve of Eratosthenes needs some citations
-% 7: understand Lambert's W function to solve x/log(x)=ax
 %
 
 \documentclass[oneside,12pt]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
@@ -678,8 +677,11 @@ While Project Euler requests that the solutions not be shared outside of the for
 			
 		\section{Sieve of Eratosthenes}\index{Sieve of Eratosthenes}
 		
-			Suppose we wish to determine all the prime numbers less than a given natural number, say $x$. We can list all the natural numbers unto $x$. We know that $2$ is the first prime number so we can remove all multiples of $2$ from the list, that is, $\set{4, 6, 8, \dots}$. The next number remaining is $3$, which we determine to be prime and we remove all multiples of three from the list, $\set{6, 9, 12, \dots}$. We then find $5$ and continue as before. If we have the memory this method works well and only involves addition rather than the more expensive multiplication. The time complexity of the algorithm is $O(n\log{(\log{(n)})})$ at register size and $O(n\log{(n)}\log{(\log{(n)})})$ in bit complexity for large numbers\footnote{Compare to the bit complexity of multiplication.}. 
+			Suppose we wish to determine all the prime numbers less than a given natural number, say $x$. We can list all the natural numbers unto $x$. We know that $2$ is the first prime number so we can remove all multiples of $2$ from the list, that is, $\set{4, 6, 8, \dots}$. The next number remaining is $3$, which we determine to be prime and we remove all multiples of three from the list, $\set{6, 9, 12, \dots}$. We then find $5$ and continue as before. If we have the memory this method works well and only involves addition rather than the more expensive multiplication. The time complexity of the algorithm is $O(n\log{(\log{(n)})})$ at register size and $O(n\log{(n)}\log{(\log{(n)})})$ in bit complexity for large numbers\footnote{Compare to the bit complexity of multiplication.}. The Sieve of Erathothenes is implemented in Listing \ref{L:seive:seiveE}
 			
+			\lstinputlisting[linerange=sieve-end\ sieve,caption=Problem 7: \texttt{sieveE()},label=L:seive:seiveE,float=htp]{../src/lang/C/sieve.c}
+		
+		\section{Sizing the Sieve}
 			With the Sieve of Eratosthenes we need an estimate of where the $n^{th}$ prime number may be found. While the Prime Number Theorem estimates the density we must be wary to undershooting $x$\footnote{We can imagine techniques which would allow us to extend and continue if we did undershoot these turn out to be unnecessary.}. Before the Prime Number Theorem was proven Chebychev proved a weaker result which provides upper and lower bounds on $\pi(x)$. 
 			\begin{thm}[Chebychev's Theorem]\label{T:7:1}
 				For $x\geq 8$
@@ -689,9 +691,28 @@ While Project Euler requests that the solutions not be shared outside of the for
 			\end{thm}
 			However, for $n=10001$ these bounds tell us $x\in(3987, 783242)$. More recently Pierre Duscart proves stricter bounds\cite{Duscart1998}. The bounds are
 			\begin{alignat}{4}
-				\left(1+\frac{1}{\log{(x)}}\right)\frac{x}{\log{(x)}} \leq \pi(x)\leq\left(1+\frac{1.2762}{\log{(x)}}\right)\frac{x}{\log{(x)}}
+				\left(1+\frac{1}{\log{(x)}}\right)\frac{x}{\log{(x)}} \leq \pi(x)\leq\left(1+\frac{1.2762}{\log{(x)}}\right)\frac{x}{\log{(x)}} \label{E:7:1}
 			\end{alignat}
 			where the first bound is valid for $x\geq 599$\footnote{Duscart provides more precise bounds for larger $x$.}. These bounds give an estimate of $x\in(104044, 106571)$. This provides a nice upper bound to work with. 
+			
+			To generalize this let the number of primes be given, say $n$; then we must solve (simplifying the lower bound in Equation \ref{E:7:1})
+			\begin{alignat}{4}
+				\frac{x(1+\log{(x)})}{\log{(x)}^2}-n=0
+			\end{alignat}
+			however this does not succumb to inversion easily. We can however solve this numerically using Newton's method. We compute the derivative
+			\begin{alignat}{4}
+				\frac{\log{(x)}^2-2}{\log{(x)}^3}
+			\end{alignat}
+			which gives us the recurrence relationship 
+			\begin{alignat}{4}
+				x_{n+1}=x_n+\frac{\log{(x_n)}\left(-x_n-x_n\log{(x_n)}+n\log{(x_n)}^2\right)}{-2+\log{(x_n)}^2}
+			\end{alignat}
+			For an initial $x_n$ we may make use of the Prime Number Theorem and set 
+			\begin{alignat}{4}
+				x_0&=n\log{(n)}
+			\end{alignat}
+			\lstinputlisting[linerange=findBound-end\ findBound,caption=Problem 7: \texttt{findBound()},label=L:seive:findBound,float=htp]{../src/lang/C/sieve.c}
+			We implement this function in Listing \ref{L:seive:findBound}. Convergence is extremely fast.  
 			
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
