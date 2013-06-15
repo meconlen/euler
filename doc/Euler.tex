@@ -459,27 +459,85 @@ While Project Euler requests that the solutions not be shared outside of the for
 				
 	\chapter{Smallest Multiple}
 	
-	\begin{quote}
-		2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+		\begin{quote}
+			2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
 
-		What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
-	\end{quote}
+			What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+		\end{quote}
+	
+		\section{Introduction}
+		
+			The solution to this problem is the least common multiple\index{least common multiple}\index{lcm|see{least common multiple}} of all integers from $1$ to $20$. 
+			\begin{definition}[Least Common Multiple]
+				The \emph{least common multiple} of two integers $a$ and $b$ is the smallest $n\in\mathbb{N}$ such that $a\mid n$ and $b\mid n$. We write $\lcm{(a, b)}=n$. 
+			\end{definition}
+			We can define the $\lcm$ on more than two integers inductively; that is $\lcm{\left(a_0, a_1, \dots, a_n\right)} = \lcm{\left(\lcm{\left(a_0, a_1, \dots, a_{n-1}\right)}, a_n\right)}$. We can compute the $\lcm$ of two integers $a$ and $b$ using the $\gcd$\index{greatest common divisor}\index{gcd|see{greatest common divisor}}. 
+			\begin{definition}[Greatest Common Divisor]\index{greatest common divisor}
+				For two integers $a$ and $b$ with both not equal to zero the \emph{greatest common divisor} is the $n\in\mathbb{N}$ such that $n\mid a$ and $n\mid b$ and any other number $k\in\mathbb{N}$ which divides both also divides $n$\footnote{This definition could be written more succinctly as the greatest integer which divides both however the definition can be extended to commutative rings where \emph{greatest} fails to have meaning.}. We write $\gcd{(a, b)}=n$. 
+			\end{definition}
+			
+			The connection between the $\lcm$ and the $\gcd$ is
+			\begin{alignat}{4}
+				\lcm{(a, b)}=\frac{a\cdot b}{\gcd{(a, b)}}\label{E:5:1}
+			\end{alignat}
+			To prove this we need some lemmas\footnote{See \cite{Molin2008}}
+			\begin{lem}[Euclid's Lemma]\index{Euclid's lemma}\label{Lem:5:1}
+				Let $a,b\in\mathbb{Z}\setminus\set{0}$ and $c\in\mathbb{Z}$ such that $c\mid ab$ with $\gcd{(b,c)}=1$ then $c\mid a$. 
+				\begin{proof}
+					Notice that $\gcd{(ab, ac)}=\order{a}\gcd{(b,c)}=\order{a}$. By hypothesis $c\mid ab$ and clearly $c\mid ac$ so $c\mid\gcd{(ab, ac)}=\order{a}$ that is, $c\mid a$. 
+				\end{proof}
+			\end{lem}
+			
+			\begin{lem} \label{Lem:5:3}
+				Let $a,b\in\mathbb{N}\setminus\set{0}$, let $\ell =\lcm{(a,b)}$ and $g=\gcd{(a,b)}=1$; then $\ell=ab$. 
+				\begin{proof}
+					Notice that $b\mid \ell$; thus $b=\ell n$ for some $n\in\mathbb{Z}$. First we show that $a\mid n$ by Lemma \ref{Lem:5:1}. By hypothesis $\gcd{(a,b)}=1$ and by definition $a\mid \ell=bn$ but $a\not\mid b$ so $a\mid n$.
+					
+					Since $\ell\mid ab$ it follow that $\ell\leq ab$; thus $ab\leq \ell=ab\left(\frac{n}{a}\right)=bn\geq ba$, where we use the fact that $a\mid n\implies n\geq a$. Since $ab\leq \ell \leq ab$ it follows that $\ell=ab$. 			
+				\end{proof}
+			\end{lem}
+			
+			\begin{lem} \label{Lem:5:2}
+				Let $a,b\in\mathbb{N}\setminus \set{0}$ and let $g=\gcd{(a,b)}$; then $\gcd{\left(\frac{a}{g},\frac{b}{g}\right)}=1$. 
+				\begin{proof}
+					Let $c\in\mathbb{N}$ such that $c\mid \frac{a}{g}$ and $c\mid \frac{b}{g}$; then $gc\mid a$ and $gc\mid b$. By maximality of $g$ it follows that $c=1$. 
+				\end{proof}
+			\end{lem}
+			\begin{thm}
+				Let $a,~b\in\mathbb{Z}\setminus\set{0}$. Let $\ell=\lcm{(a,b)}$ and $g=\gcd{(a,b)}$ then $\ell g=ab$
+				\begin{proof}
+					 By Lemma \ref{Lem:5:2}, $\gcd{\left(\frac{a}{g},\frac{b}{g}\right)}=1$. By Lemma \ref{Lem:5:3} then $\lcm{\left(\frac{a}{g},\frac{b}{g}\right)}=\frac{ab}{g^2}$; so $ab=g^2\cdot \lcm{\left(\frac{a}{b},\frac{b}{g}\right)}=g\cdot\lcm{(a,b)}=g\ell$ as required. 
+				\end{proof}
+			\end{thm}
+			Thus Equation \ref{E:5:1} is confirmed. This reduces the problem to one of finding the $\gcd$ of two numbers. 
+		\section{Computing the Greatest Common Divisor}
+		
+			Euclidean Division\index{Euclidean division} states that for $a,b\in\mathbb{Z}$ and $b\neq 0$ there exists unique integers $q,~r$ such that $a=bq+r$ and $0\leq r< \order{b}$. We can use this in an algorithm to find $\gcd{(a,b)}$. Let $a$ and $b$ be given; then write 
+			\begin{alignat*}{4}
+				a&=bq_0+r_0 \\
+				b&=r_0q_1+r_1 \\
+				r_0&=r_1q_2+r_2 \\
+				&\dots \\
+				r_{n-2}&=r_{n-1}q_n+r_n
+			\end{alignat*}
+			By Euclidean Division we can see that the sequence $\set{r_k}$ is decreasing and this procedure terminates when $r_n=0$. We can see then from the equations that $r_{n-1}$ divides $a$ and $b$ by noting that since $r_n=0$ then $r_{n-1}\mid r_{n-1}q_n=r_{n-2}$ and work up the ladder.  Let $c$ be any number that divides $a$ and $b$; then by the first equation $c\mid r_0$, and so forth we see that $c\mid r_k$ for all $k<n$; in particular $c\mid r_{n-1}$; so $c\leq r_{n-1}$ and $r_{n-1}=\gcd{(a,b)}$. 
+			
 	
 	\chapter{Sum Square Difference}
 	
-	\begin{quote}
-		The sum of the squares of the first ten natural numbers is,
-		\begin{alignat*}{4}
-			1^2+2^2+\dots +10^2 = 385
-		\end{alignat*}
-		The square of the sum of the first ten natural numbers is,
-		\begin{alignat*}{4}
-			\left(1+2+\dots +10\right)^2=3025
-		\end{alignat*}
-		Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is $3025-385=2640$.
+		\begin{quote}
+			The sum of the squares of the first ten natural numbers is,
+			\begin{alignat*}{4}
+				1^2+2^2+\dots +10^2 = 385
+			\end{alignat*}
+			The square of the sum of the first ten natural numbers is,
+			\begin{alignat*}{4}
+				\left(1+2+\dots +10\right)^2=3025
+			\end{alignat*}
+			Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is $3025-385=2640$.
 		
-		Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum. 
-	\end{quote}
+			Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum. 
+		\end{quote}
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
 		\section{Introduction}

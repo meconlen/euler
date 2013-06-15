@@ -11,14 +11,18 @@
 
 #include "factor.h"
 #include "palindrome.h"
+#include "algebra.h"
 
 int main() 
 {
 #if HAVE_CUNIT_CUNIT_H
-	CU_pSuite factorSuite = NULL, palindromeSuite = NULL;
+	CU_pSuite factorSuite = NULL, palindromeSuite = NULL, algebraSuite = NULL;
 
 	if(CU_initialize_registry() != CUE_SUCCESS) goto error0;
 
+	if((algebraSuite = CU_add_suite("algebra", init_algebra, clean_algebra)) == NULL) goto error1;
+	if((CU_add_test(algebraSuite, "gcd()", unit_gcd)) == NULL) goto error1;
+	
 	if((factorSuite = CU_add_suite("factor", init_factor, clean_factor)) == NULL) goto error1;
 	if((CU_add_test(factorSuite, "factorN()", unit_factorN)) == NULL) goto error1;
 	if((CU_add_test(factorSuite, "twoFactor()", unit_twoFactor)) == NULL) goto error1;
