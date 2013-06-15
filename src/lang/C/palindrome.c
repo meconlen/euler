@@ -89,9 +89,11 @@ void unit_palindromeSuccessor(void)
 	palindromeSuccessor(&n);
 	CU_ASSERT(n.a == 100 && n.b == 0);
 
+/*
 	for(i=0; i<21; i++) {
 		printf("%d: % .20e, % .20e, % .20e\n", i, pow(10, i), log10(pow(10, i)), log10(pow(10, i)+1));
 	}
+*/
 	
 	return;
 // error0:
