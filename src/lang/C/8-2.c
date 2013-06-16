@@ -15,7 +15,7 @@ char string[] = "731671765313306249192251196744265747423553491949349698352031277
 // main //
 int main(int argc, char *argv[])
 {
-	uint64_t	n=0, maxProd = 0, curProd = 1, cur, len; 
+	uint64_t	i, n=0, maxProd = 0, curProd = 1, cur, len, zeroCount = 5;
 	char		copt;	
 
 	while((copt = getopt(argc, argv, "n:")) != -1) {
@@ -25,9 +25,12 @@ int main(int argc, char *argv[])
 		}
 	}
 	len = strlen(string);
-	for(cur = 4; cur <len; cur++) {
-		curProd = (string[cur - 4] - '0') * (string[cur - 3] - '0') * (string[cur - 2] - '0') * (string[cur -1] - '0') * (string[cur] - '0');
-		if(curProd > maxProd) maxProd = curProd;
+	for(i=0; i<len; i++) string[i] -= '0';
+	curProd = string[0] * string[1] * string[2] * string[3] * string[4];
+	for(cur = 5; cur <len; cur++, zeroCount++) {
+		if(string[cur] == 0) { string[cur] = 1; zeroCount = 0; }
+		curProd = (curProd * string[cur])/string[cur-5];
+		if(curProd > maxProd & zeroCount > 4) maxProd = curProd;
 	}
 	printf("maxProd = %llu\n", maxProd);
 	exit(0);
