@@ -832,12 +832,14 @@ While Project Euler requests that the solutions not be shared outside of the for
 			establishing the equality. Suppose that $p\mid \gcd{(m, n)}$ then $p\mid{(b, c)}$ which is a contradiction so $\gcd{(m, n)}=1$, also establishing that $b$ is odd since otherwise $2\mid\gcd{(a, b, c)}$ which is a contradiction. 
 			
 		\section{Algorithm}
-		
-			Making use of the established enumeration we may work as follows. For each $m>1$ consider $n<1$ such that $m\not\equiv n\pmod{2}\footnote{For sufficiently large $m$ and $n$ it will become more efficient to compute the prime factorizations and determine if they are coprime.}$. Construct the triplet $(2mn, m^2-n^2, m^2+n^2)$. If $1000 \equiv 2\pmod{2m^2+2mn}$ then set
+
+			\lstinputlisting[linerange=findTriple-end\ findTriple,caption=Problem 9: \texttt{findTriple2()},label=L:9:2,float=htp]{../src/lang/C/9-2.c}
+
+			Making use of the established enumeration we may work as follows. For each $m>1$ consider $n<1$ such that $m\not\equiv n\pmod{2}\footnote{For sufficiently large $m$ it will become more efficient to compute the prime factorization of $m$ and enumerate the $n<m$ that are coprime.}$. Construct the triplet $(2mn, m^2-n^2, m^2+n^2)$. If $1000 \equiv 0 \pmod{2m^2+2mn}$ then set
 			\begin{alignat}{4}
 				k&=\frac{1000}{2m^2+2mn}
 			\end{alignat}
-			and compute $k^3(2mn)(m^2-n^2)(m^2+n^2)=2k^3\left(m^5n-mn^5\right)$. 
+			and compute $k^3(2mn)(m^2-n^2)(m^2+n^2)=2k^3\left(m^5n-mn^5\right)$. This solution is given in Listing \ref{L:9:2}. 
 				
 %			Let $m\in\mathbb{N}$ be given and let $n<m$ with $(m, n)=1$ be given. Let $a=m^2-n^2$ and let $b=2mn$; then $c=m^2+n^2$. Mollin shows that this construction generates a primitive triple and all primitives can be constructed as such\cite{Mollin2008}. Using these facts we can enumerate the set of primitive Pythagorean triples easily and with a third parameter $k$ we can find any triple. 
 

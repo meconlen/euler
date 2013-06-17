@@ -26,6 +26,8 @@ Makefile
 8-2a.c
 8-2b
 8-2b.c
+9-1
+9-2
 bignumber.c
 makeString
 *.o
