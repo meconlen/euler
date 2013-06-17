@@ -1,4 +1,9 @@
 Makefile
+bignumber.c
+makeString
+*.o
+*.swp
+test
 1-1
 1-1.dSYM/
 1-2
@@ -28,8 +33,4 @@ Makefile
 8-2b.c
 9-1
 9-2
-bignumber.c
-makeString
-*.o
-*.swp
-test
+10-1

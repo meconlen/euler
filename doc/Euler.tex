@@ -675,7 +675,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 			\end{alignat}
 			since $\frac{\pi(x)}{x}\to 0$ as $x\to \infty$. These results show that finding the $n^{th}$ prime number is difficult. The na\"ive solution would be to check each natural number $k$ in succession testing it for primality by dividing it by every prime found less than $\sqrt{k}$. For small natural numbers, say $n=10001$ this isn't too bad; however for very large natural numbers the divisions becomes expensive\footnote{Multiplication is practically $O(n\log{(n)}\log{(\log{(n)})}$ while addition is $O(\log{(n)})$. }. 
 			
-		\section{Sieve of Eratosthenes}\index{Sieve of Eratosthenes}
+		\section{Sieve of Eratosthenes}\index{Sieve of Eratosthenes}\label{S:7:2}
 		
 			Suppose we wish to determine all the prime numbers less than a given natural number, say $x$. We can list all the natural numbers unto $x$. We know that $2$ is the first prime number so we can remove all multiples of $2$ from the list, that is, $\set{4, 6, 8, \dots}$. The next number remaining is $3$, which we determine to be prime and we remove all multiples of three from the list, $\set{6, 9, 12, \dots}$. We then find $5$ and continue as before. If we have the memory this method works well and only involves addition rather than the more expensive multiplication. The time complexity of the algorithm is $O(n\log{(\log{(n)})})$ at register size and $O(n\log{(n)}\log{(\log{(n)})})$ in bit complexity for large numbers\footnote{Compare to the bit complexity of multiplication.}. The Sieve of Erathothenes is implemented in Listing \ref{L:seive:seiveE}
 			
@@ -843,6 +843,18 @@ While Project Euler requests that the solutions not be shared outside of the for
 				
 %			Let $m\in\mathbb{N}$ be given and let $n<m$ with $(m, n)=1$ be given. Let $a=m^2-n^2$ and let $b=2mn$; then $c=m^2+n^2$. Mollin shows that this construction generates a primitive triple and all primitives can be constructed as such\cite{Mollin2008}. Using these facts we can enumerate the set of primitive Pythagorean triples easily and with a third parameter $k$ we can find any triple. 
 
+	\chapter{Summation of Primes}
+	
+		\begin{quote}
+			The sum of the primes below $10$ is $2 + 3 + 5 + 7 = 17$.
+
+			Find the sum of all the primes below two million.
+		\end{quote}
+		
+		\section{Introduction}
+			This problem is trivial given the use of the Sieve of Eratosthenes described in Section \ref{S:7:2}. 
+			
+			\lstinputlisting[linerange=sumPrimes-end\ sumPrimes,caption=Problem 10: \texttt{sumPrimes()},label=L:10:1,float=htp]{../src/lang/C/10-1.c}
 
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
