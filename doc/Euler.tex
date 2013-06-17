@@ -484,7 +484,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 			\begin{alignat}{4}
 				\lcm{(a, b)}=\frac{a\cdot b}{\gcd{(a, b)}}\label{E:5:1}
 			\end{alignat}
-			To prove this we need some lemmas\footnote{See \cite{Molin2008}}
+			To prove this we need some lemmas\footnote{See \cite{Mollin2008}}
 			\begin{lem}[Euclid's Lemma]\index{Euclid's lemma}\label{Lem:5:1}
 				Let $a,b\in\mathbb{Z}\setminus\set{0}$ and $c\in\mathbb{Z}$ such that $c\mid ab$ with $\gcd{(b,c)}=1$ then $c\mid a$. 
 				\begin{proof}
@@ -755,6 +755,92 @@ While Project Euler requests that the solutions not be shared outside of the for
 
 			The second change is that instead of taking $995\times 5$ products I could compute the first product of five digits. For each subsequent product I could divide out the first digit in the current list and multiply the new digit being added to the list. This requires some particular handling of the case where there is a zero in the list, but reduces the number of multiplications by approximately $60\%$. This solution takes approximately twice as long to run. This solution is given in Listing \ref{L:8:2a}. 
 			\lstinputlisting[linerange=main-end\ main,caption=Problem 8: Shifting,label=L:8:2a,float=htp]{../src/lang/C/8-2a.c}
+
+	\chapter{Special Pythagorean triplet}
+	
+		\begin{quote}
+			A Pythagorean triplet is a set of three natural numbers, a  b  c, for which,
+			\begin{alignat*}{4}
+				a^2 + b^2 = c^2
+			\end{alignat*}
+			For example, $3^2 + 4^2 = 9 + 16 = 2^5 = 52$.
+
+			There exists exactly one Pythagorean triplet for which $a + b + c = 1000$.
+			Find the product abc.
+		\end{quote}
+		
+		\section{Introduction}
+			The na\"ive solution is to try each combination of $(a, b, c)$ such that $a+b+c=1000$ of which there are $10^6$, determine if they constitute a Pythagorean triplet and compute the product. This solution is given in Listing \ref{L:9:1}. 
+			
+			\lstinputlisting[linerange=findTriple-end\ findTriple,caption=Problem 9: \texttt{findTriple()},label=L:9:1,float=htp]{../src/lang/C/9-1.c}
+			
+		\section{Primitive Pythagorean Triplets}
+		
+			First a definition is in order to be clear,
+			\begin{definition}[Pythagorean Triple]\index{Pythagorean triple}
+				Let $a,~b,~c\in\mathbb{N}$, then the triple $(a, b, c)$ is a Pythagorean triple if $a^2+b^2=c^2$. 
+			\end{definition}
+			Thus we could enumerate the pairs of integers $(a,b)$ and see if the resulting $c$ is an integer; however this is slow. There is a special subset of triples that can be used to generate the full set, the primitive triples
+			\begin{definition}[Primitive Pythagorean Triple]
+				A Pythagorean triple $(a, b, c)$ is said to be  primitive iff $a$, $b$ and $c$ are coprime. 
+			\end{definition}
+			If $(a,b,c)$ is a primitive Pythagorean triple we can generate any other Pythagorean triple by multiplying by a factor $k$; that is, suppose that $(a,b,c)$ is some non-primitive pythagorean triple, then let $k=\gcd{(a, b, c)}$ and let $a=a'k$, $b=b'k$ and $c=c'k$; then $(a', b', c')$ is a primitive Pythagorean triple since 
+			\begin{alignat}{4}
+				&&a^2+b^2&=c^2 \notag \\
+				\implies && (ka')^2+(kb')^2&=(kc')^2 \notag \\
+				\implies && k^2\left(a'^2+b'^2\right)=k^2c' \notag \\
+				\implies && a'^2+b'^2=c'^2 \notag 
+			\end{alignat}
+			and $\gcd{(a', b', c')}=1$. Conversely we can see that taking any primitive triple we can multiply by any $k\in\mathbb{N}$ an the result is still a Pythagorean triple. 
+			
+			We now show that we can consider any pair of numbers $\gcd{(m,n)}$ such that $m>n$ and $(m,n)=1$ and generate a primitive Pythagorean triple. 
+			\begin{thm}
+				$(a, b, c)$ is a primitive Pythagorean triple if and only if there exists $m, n\in\mathbb{N}$ such that $m>n$, $\gcd{(m, n)}=1$, $m\not\equiv n\pmod 2$ and $(a, b, c)=\left(2mn, m^2-n^2, m^2+n^2\right)$. 
+				\begin{proof}
+					Suppose that $m, n\in\mathbb{N}$ with $m>n$ and $\gcd{(m, n)}=1$; then let $a=2mn$, $b=m^2-n^2$ and $c=m^2+n^2$ and we compute
+					\begin{alignat*}{4}
+						a^2+b^2&=(2mn)^2 + \left(m^2-n^2\right)^2 \\
+							&=(2mn)^2 + m^4 -2m^2n^2 + n^4 \\
+							&=m^4+2m^2n^2 + n^4  \\
+							&=\left(m^2+n^2\right)^2 \\
+							&=c^2
+					\end{alignat*}
+					So that $(a, b, c)$ are a Pythagorean triple. To show that $\gcd{(a, b, c)}=1$ notice that since $m\not\equiv n\pmod{2}$ that $c$ is odd\footnote{WLOG let $m=2k$ be even and $n=2j+1$ be odd; then $c=m^2+n^2=(2k)^2+(2j+1)^2=4k^2+4j^2+4j+1\equiv 1\pmod{2}$.}. Let $p\mid \gcd{(a, b, c)}$, then $p>2$. $p\mid c+b\implies p\mid 2m^2$ and $p\mid c-b\implies p\mid 2n^2$. Since $p$ is odd we have $p\mid \gcd{(m, n)}$ which is a contradiction of $\gcd{(m, n)}=1$; therefore $\gcd{(a, b, c)}=1$ and hence $(a, b, c)$ are primitive.
+					
+					Conversely suppose that $(a, b, c)$ are a primitive Pythagorean triple so that $a^2+b^2=c^2$. WLOG let $a$ be even. If $b$ is even then so is $c$; but then $2$ divides all three and $(a, b, c)$ is not primitive; so $b$ is odd and hence $c$ is odd; so $b-c$ and $b+c$ are even; set $c-b=2j$ and $c-b=2k$; then 
+					\begin{alignat}{4}
+						a^2&=c^2-b^2 \notag \\
+							&=(c-b)(c+b) \notag 
+					\end{alignat} 
+					Since $a$ is even we can write 
+					\begin{alignat}{4}
+						\left(\frac{a}{2}\right)^2&=\left(\frac{(c-b)}{2}\right)\left(\frac{(c+b)}{2}\right)=s\cdot t \notag 
+					\end{alignat}
+				\end{proof}
+			\end{thm}
+			We can see that $\gcd{(s, t)}=1$ since $\gcd{(b, c)}=1$\footnote{Suppose $p\mid\gcd{(b,c)}$ then $p\mid b^2$ and $p\mid c^2$ hence $p\mid a^2\implies p\mid a$ which contradicts $\gcd{(a, b, c)}=1$.}. 
+			
+			Now we show that there exists $m, n\in\mathbb{N}$ such that $s=n^2$ and $t=m^2$.  If $s=1$ or $t=1$ then the claim is vacuously true so we may assume that $s,~t>1$; then consider the prime factorizations as well as that of $\frac{a}{2}$. Since $\gcd{(s, t)}=1$ we can see that each prime factor of $s$ and $t$ must occur twice in $\left(\frac{a}{2}\right)^2$ and hence twice in $s$ and $t$; thus we may set $s=n^2$ and $t=m^2$. Now we can compute
+			\begin{alignat}{4}
+				c&=t+s&=m^2+n^2 \\
+				b&=t-s&=m^2-n^2
+			\end{alignat}
+			and by extension 
+			\begin{alignat}{4}
+				x=2mn
+			\end{alignat}
+			establishing the equality. Suppose that $p\mid \gcd{(m, n)}$ then $p\mid{(b, c)}$ which is a contradiction so $\gcd{(m, n)}=1$, also establishing that $b$ is odd since otherwise $2\mid\gcd{(a, b, c)}$ which is a contradiction. 
+			
+		\section{Algorithm}
+		
+			Making use of the established enumeration we may work as follows. For each $m>1$ consider $n<1$ such that $m\not\equiv n\pmod{2}\footnote{For sufficiently large $m$ and $n$ it will become more efficient to compute the prime factorizations and determine if they are coprime.}$. Construct the triplet $(2mn, m^2-n^2, m^2+n^2)$. If $1000 \equiv 2\pmod{2m^2+2mn}$ then set
+			\begin{alignat}{4}
+				k&=\frac{1000}{2m^2+2mn}
+			\end{alignat}
+			and compute $k^3(2mn)(m^2-n^2)(m^2+n^2)=2k^3\left(m^5n-mn^5\right)$. 
+				
+%			Let $m\in\mathbb{N}$ be given and let $n<m$ with $(m, n)=1$ be given. Let $a=m^2-n^2$ and let $b=2mn$; then $c=m^2+n^2$. Mollin shows that this construction generates a primitive triple and all primitives can be constructed as such\cite{Mollin2008}. Using these facts we can enumerate the set of primitive Pythagorean triples easily and with a third parameter $k$ we can find any triple. 
+
 
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
