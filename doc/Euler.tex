@@ -949,6 +949,37 @@ While Project Euler requests that the solutions not be shared outside of the for
 			
 			\lstinputlisting[linerange=findSum-end\ findSum,caption=Problem 13: \texttt{findSum()},label=L:13:1,float=htp]{../src/lang/C/13-1.c}
 	
+	\chapter{Largest Collatz Sequence}
+		\begin{quote}
+			The following iterative sequence is defined for the set of positive integers:
+			\begin{alignat*}{4}
+				n&\to  \frac{n}{2}&\hspace{1 cm}\textrm{(n is even)} \\
+				n&\to  3n + 1&\hspace{1 cm} \textrm{(n is odd)}
+			\end{alignat*}
+
+			Using the rule above and starting with 13, we generate the following sequence:
+			\begin{alignat*}{4}
+				13 \to 40 \to 20 \to 10 \to 5 \to 16 \to 8 \to 4 \to 2 \to 1
+			\end{alignat*}
+			It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+
+			Which starting number, under one million, produces the longest chain?
+
+			NOTE: Once the chain starts the terms are allowed to go above one million.
+		\end{quote}
+		
+	\section{Introduction}
+	
+		There is a simple na\"ive solution of iterating over each value and computing the chain. This solution is given in Listing \ref{L:14:1}. Running this algorithm though we can see that for the relatively small input of $10^6$ that this algorithm takes $0.270~s$; moreover the algorithm appears to be at best $O(n)$. 
+
+		\lstinputlisting[linerange=findMaxChain-end\ findMaxChain,caption=Problem 14: \texttt{findMaxChain()},label=L:14:1,float=htp]{../src/lang/C/14-1.c}
+	
+	\section{Memoization}
+		Suppose
+	
+			
+	
+	
 \appendix
 
 	\chapter{Problem 13}\label{A:P:13}
