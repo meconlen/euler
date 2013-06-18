@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 	rc = findTriple(n, &a, &b, &c);	
 	if(rc == 0) printf("a = %llu, b = %llu, c = %llu, abc = %llu\n", a, b, c, a*b*c);
 	exit(0);
-error0:
+// error0:
 	exit(-1);
 usage:
 	fprintf(stderr, "%s -n N\n", argv[0]);

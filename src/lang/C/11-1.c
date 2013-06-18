@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	maxProd = findMax();
 	printf("maxProd = %llu\n", maxProd);	
 	exit(0);
-error0:
+// error0:
 	exit(-1);
 usage:
 	fprintf(stderr, "%s -n N\n", argv[0]);

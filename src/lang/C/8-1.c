@@ -15,7 +15,7 @@ char string[] = "731671765313306249192251196744265747423553491949349698352031277
 // main //
 int main(int argc, char *argv[])
 {
-	uint64_t	n=0, maxProd = 0, curProd = 1, cur, len; 
+	uint64_t	maxProd = 0, curProd = 1, cur, len; 
 	char		copt;	
 
 	while((copt = getopt(argc, argv, "n:")) != -1) {
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	}
 	printf("maxProd = %llu\n", maxProd);
 	exit(0);
-error0:
+//error0:
 	exit(-1);
 usage:
 	fprintf(stderr, "Usage: %s\n", argv[0]);
