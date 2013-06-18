@@ -10,20 +10,15 @@
 #include "algebra.h"
 #include "sieve.h"
 
-int main(int argc, char *argv[])
+// findSum //
+int findSum(void)
 {
-	char		copt, *line = NULL;	
+	char		*line = NULL;
 	size_t		linecap = 0;
 	mpz_t		input, sum;
 	uint64_t	i;	
 	FILE		*f;
 
-	while((copt = getopt(argc, argv, "n:")) != -1) {
-		switch(copt) {
-			default:
-				goto usage;	
-		}
-	}
 	mpz_init(input);
 	mpz_init(sum);	
 	mpz_set_ui(sum, 0);
@@ -36,6 +31,20 @@ int main(int argc, char *argv[])
 	printf("sum = ");
 	mpz_out_str(stdout, 10, sum);
 	printf("\n");
+	return(0);	
+}
+// end findSum //
+
+int main(int argc, char *argv[])
+{
+	char		copt;
+	while((copt = getopt(argc, argv, "n:")) != -1) {
+		switch(copt) {
+			default:
+				goto usage;	
+		}
+	}
+	findSum();
 	exit(0);
 // error0:
 	exit(-1);

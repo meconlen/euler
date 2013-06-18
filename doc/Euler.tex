@@ -945,8 +945,9 @@ While Project Euler requests that the solutions not be shared outside of the for
 		
 		\section{Introduction}
 		
-			We could use several \texttt{uint64_t} integers to break the $50$ digit number into three $19$ digit components then write our own addition function; however the GNU Multiple Precision library handles this type of problem excellently. 
-	
+			We could use several \texttt{uint64\_t} integers to break the $50$ digit number into three $19$ digit components then write our own addition function; however the GNU Multiple Precision library handles this type of problem excellently at which point the problem becomes trivial, as in Listing \ref{L:13:1}. 
+			
+			\lstinputlisting[linerange=findSum-end\ findSum,caption=Problem 13: \texttt{findSum()},label=L:13:1,float=htp]{../src/lang/C/13-1.c}
 	
 \appendix
 
