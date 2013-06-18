@@ -988,6 +988,38 @@ While Project Euler requests that the solutions not be shared outside of the for
 		\end{spacing}		
 		\clearpage
 	
+	\chapter{Lattice Paths}
+		\begin{quote}
+			Starting in the top left corner of a 22 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner as in Figure \ref{Fig:15:1}\footnote{From the project Euler website \url{http://projecteuler.net/problem=15}.}. How many such routes are there through a $20\times 20$ grid?
+			\begin{figure}
+				\centering
+					\includegraphics[]{p_015.pdf}
+				\caption{Paths through $2\times 2$ Grid}\label{Fig:15:1}
+			\end{figure}
+		\section{Introduction}
+		
+			We can consider the possible paths through the grid as a sequence of movements right and movements down\footnote{We assume that we are never moving away from the destination, otherwise the number of paths are infinite.}. If we identify these with zero and one respectively we can write a path as a binary number. The length of the binary number is the taxicab distance\index{taxicab distance}\footnote{The taxicab distance, also known as the Manhattan distance or the $L_1$ norm\index{norm} in two dimensions for two points $x=(x_1, x_2)$ and $y=(y_1, y_2)$ is $d(x, y)=\sum_{k=1}^2\order{x_k-y_k}$.} from the upper left corner to the lower right corner. For grid of size $m\times n$ the distance is $m+n$. 
+			
+			Considering that we must move exactly $m$ to the left and exactly $n$ down we can see that the representation must have exactly $m$ zeros and $n$ ones. We can solve this problem by counting. If we write down where each zero is located there are $(m+n)$ options for the first zero, $(m+n-1)$ for the second and so forth down to $(n)$. For example in a $3x3 grid$ we have six movements, we might places the zeroes in the first, second and fifth location, say $(1, 2, 5)$, but we might also identify $(1, 5, 2)$, $(2, 5, 1)$ and so forth. We must divide by the permutations of $m$ objects, that is $m!$; thus the solution is 
+			\begin{alignat}{4}
+				\frac{(m+n)!}{m!n!}
+			\end{alignat}
+		
+		\section{Programming the Solution}
+		
+			While we can write down the solution as 
+			\begin{alignat}{4}
+				\frac{40!}{20!20!}
+			\end{alignat}
+			we are asked to encode the solution. Notice that $\log_2{(40!)}=159.159$. Clearly until we have $256$ bit numbers the computation is not straight forward; thus we are forced to use GMP (or similar). The solution is given in Listing \ref{L:15:1}. 
+			
+			\lstinputlisting[linerange=findPaths-end\ findPaths,caption=Problem 15: \texttt{findPaths()},label=L:15:1,float=]{../src/lang/C/15-1.c}
+			
+
+
+		\end{quote}
+		
+	
 \appendix
 
 	\chapter{Problem 13}\label{A:P:13}
