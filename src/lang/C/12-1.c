@@ -8,21 +8,10 @@
 #include "algebra.h"
 #include "sieve.h"
 
-int main(int argc, char *argv[])
+// findTriangle //
+uint64_t findTriangle(uint64_t n)
 {
-	uint64_t	n=0, i, j, sum, *list, len, *factorList, maxPrime, divisors = 1;
-	char		copt;	
-
-	while((copt = getopt(argc, argv, "n:")) != -1) {
-		switch(copt) {
-			case	'n':
-				n = atoll(optarg);
-				break;
-			default:
-				goto usage;	
-		}
-	}
-	if(n == 0) goto usage;
+	uint64_t	i, j, sum, *list, len, *factorList, maxPrime, divisors = 1;
 	for(i=1; ; i++) {
 		sum = (i*(i+1))/2;
 		factorN(sum, &list, &len);
@@ -39,7 +28,27 @@ int main(int argc, char *argv[])
 		free(factorList);
 		if(divisors > n) break;
 	}
-	printf("i = %llu, sum = %llu, divisors = %llu\n", i, sum, divisors);	
+	return(sum);
+}
+// end findTriangle //
+
+int main(int argc, char *argv[])
+{
+	uint64_t	n=0, sum;
+	char		copt;	
+
+	while((copt = getopt(argc, argv, "n:")) != -1) {
+		switch(copt) {
+			case	'n':
+				n = atoll(optarg);
+				break;
+			default:
+				goto usage;	
+		}
+	}
+	if(n == 0) goto usage;
+	sum = findTriangle(n);
+	printf("sum = %llu\n", sum);
 	
 	exit(0);
 error0:

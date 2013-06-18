@@ -917,7 +917,13 @@ While Project Euler requests that the solutions not be shared outside of the for
 		\section{Introduction}
 		
 			The triangle numbers are the natural numbers of the form $\sum_{k=1}^n k=\frac{n(n+1)}{2}$ as noted in Section \ref{S:6:3}. To count the divisors of a number $x$ we write $x=\prod_{j=1}^r{p_j^{\alpha_j}}$ then for each $j$ tuple $(\alpha_1, \alpha_2, \dots, \alpha_r)$ there is a unique divisor; hence the number of divisors is $\prod_{j=1}^r(\alpha_j+1)$. 
+			
+			The solution in Listing \ref{L:12:1} simply enumerates the triangle numbers factoring each integer and scans the list of prime factors for the largest, denoted \texttt{maxPrime}. The algorithm then allocates an array, \texttt{factorList} of length \texttt{maxPrime +1} which is zero filled. This allows us to scan the list of prime factors and increment the element \texttt{factorList[list[j]]} to count the exponent of each prime number. 
+			
+			We could scan the entire list taking the product of each element \texttt{+1}; however this is likely inefficient, instead we scan the prime factor list for indexes into \texttt{factorList} and add the appropriate value to the product; then set the value to zero so that factors of multiplicity greater than $1$ are not counted multiple times. 
 
+			\lstinputlisting[linerange=findTriangle-end\ findTriangle,caption=Problem 12: \texttt{findTriangle()},label=L:12:1,float=htp]{../src/lang/C/12-1.c}
+	
 \appendix
 	\chapter{Factoring Integers}\label{C:Factoring}
 		\section{Introduction}
