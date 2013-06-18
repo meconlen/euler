@@ -970,15 +970,23 @@ While Project Euler requests that the solutions not be shared outside of the for
 		
 	\section{Introduction}
 	
-		There is a simple na\"ive solution of iterating over each value and computing the chain. This solution is given in Listing \ref{L:14:1}. Running this algorithm though we can see that for the relatively small input of $10^6$ that this algorithm takes $0.270~s$; moreover the algorithm appears to be at best $O(n)$. 
+		There is a simple na\"ive solution of iterating over each value and computing the chain. This solution is given in Listing \ref{L:14:1}. Running this algorithm though we can see that for the relatively small input of $10^6$ that this algorithm takes $0.270~s$; moreover the algorithm appears to be super-linear in time.  
 
 		\lstinputlisting[linerange=findMaxChain-end\ findMaxChain,caption=Problem 14: \texttt{findMaxChain()},label=L:14:1,float=htp]{../src/lang/C/14-1.c}
 	
 	\section{Memoization}
-		Suppose
-	
-			
-	
+		Suppose we compute the chain 
+		\begin{alignat*}{4}
+			13 \to 40 \to 20 \to 10 \to 5 \to 16 \to 8 \to 4 \to 2 \to 1
+		\end{alignat*}
+		We could save these results noting that $2$ generates  a chain of length 2, $4$ generates a chain of length $3$ and s forth. Then, next time a chain hits one of these values we no longer need to compute the rest of the chain. The primary issue with using memoization in this algorithm is that it's impossible to tell the maximum value one might encounter. In the above sequence the initial value of $30$ reaches a maximum of $40$. With this in mind we identify a maximum size of our memoization table and allocate memory for that table alone. While chains which have large numbers may not make complete use of the table the performance gains are still substantial. 
+		
+		The algorithm consists of two parts. The first is to compute the chain, storing the chain in the array \texttt{z[]}, until we reach a point in the table \texttt{memo[]}. Notice that the array \texttt{z[]} is used as a queue and is dynamically extended as necessary by factors of $2$. The second part then stores values in the chain which fall within the limits of \texttt{memo[]} in the table for later use. While the algorithm, given in Listing \ref{L:14:2}, is considerably more complex it is an order of magnitude faster for inputs which generate chains with values about to the limits of \texttt{uint64_t}$. 
+		\clearpage
+		\begin{spacing}{1}
+			\lstinputlisting[linerange=findMaxChain-end\ findMaxChain,caption=Problem 14 Memoized: \texttt{findMaxChain()},label=L:14:2]{../src/lang/C/14-2.c}
+		\end{spacing}		
+		\clearpage
 	
 \appendix
 
