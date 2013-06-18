@@ -1016,7 +1016,18 @@ While Project Euler requests that the solutions not be shared outside of the for
 			
 			\lstinputlisting[linerange=findPaths-end\ findPaths,caption=Problem 15: \texttt{findPaths()},label=L:15:1,float=]{../src/lang/C/15-1.c}
 			
-
+	\chapter{Power digit sum}
+		\begin{quote}
+			$2^{15}=32768$ and the sum of it's digits is $3+2+7+6+8=26$. 
+			
+			What is the sum of the digits of the number $6^{1000}$?
+		\end{quote}
+		\section{Introduction}
+		
+			This is another problem which becomes trivial once GMP is employed. We need only use GMP to write the number as a string using \texttt{mpz\_get\_str()}. The length of the string can be computed using \texttt{mpz\_sizeinbase()}. The solution is give in Listing \ref{L:16:1}
+			
+			\lstinputlisting[linerange=findSum-end\ findSum,caption=Problem 16: \texttt{findSum()},label=L:16:1,float=]{../src/lang/C/16-1.c}
+			
 		
 	
 \appendix
