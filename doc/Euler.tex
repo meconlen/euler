@@ -996,6 +996,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 					\includegraphics[]{p_015.pdf}
 				\caption{Paths through $2\times 2$ Grid}\label{Fig:15:1}
 			\end{figure}
+		\end{quote}
 		\section{Introduction}
 		
 			We can consider the possible paths through the grid as a sequence of movements right and movements down\footnote{We assume that we are never moving away from the destination, otherwise the number of paths are infinite.}. If we identify these with zero and one respectively we can write a path as a binary number. The length of the binary number is the taxicab distance\index{taxicab distance}\footnote{The taxicab distance, also known as the Manhattan distance or the $L_1$ norm\index{norm} in two dimensions for two points $x=(x_1, x_2)$ and $y=(y_1, y_2)$ is $d(x, y)=\sum_{k=1}^2\order{x_k-y_k}$.} from the upper left corner to the lower right corner. For grid of size $m\times n$ the distance is $m+n$. 
@@ -1016,8 +1017,6 @@ While Project Euler requests that the solutions not be shared outside of the for
 			\lstinputlisting[linerange=findPaths-end\ findPaths,caption=Problem 15: \texttt{findPaths()},label=L:15:1,float=]{../src/lang/C/15-1.c}
 			
 
-
-		\end{quote}
 		
 	
 \appendix
