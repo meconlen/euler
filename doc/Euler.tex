@@ -1044,14 +1044,14 @@ While Project Euler requests that the solutions not be shared outside of the for
 	
 		\begin{quote}
 			By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
-			\begin{alignat*}{4}
+			\begin{alignat}{4}
 				\begin{array}{ccccccc}
 					&&&\textcolor{red}{3}&&& \\
 					&&\textcolor{red}{7}&& 4&& \\
 					&2&&\textcolor{red}{4}&& 6& \\
 					8 && 5 && \textcolor{red}{9} && 3
-				\end{array}
-			\end{alignat*}
+				\end{array} \label{E:18:1}
+			\end{alignat}
 
 			That is, $3 + 7 + 4 + 9 = 23$.
 
@@ -1097,7 +1097,104 @@ While Project Euler requests that the solutions not be shared outside of the for
 			\end{definition}
 			
 			With these definitions we are prepared to compute the shortest path of a DAG. Given a DAG, a start vertex and an end vertex we execute a topological sort of the vertices. Using this we find the start vertex and label the vertex with length 0. Then for each vertex $v$ we consider each inbound edge. The vertex on the other side of that edge will be labeled (because we are working through the vertices in the topological sort) with a length. We consider the length to that vertex plus the edge weight and find the lowest value for all edges which point to $v$ and label $v$ accordingly. Once we label the ending vertex we will have computed the minimum distance. The algorithm runs in $O\left(\order{V}+\order{E}\right)$. 
+		
+		\section{Solving the Triangle}
+		
+			The triangle may be placed into a DAG by placing a vertex at each point in the triangle and labeling each edge away from the vertex with the value of the point. The vertices on the last row would all have edges to a single sink point. We can make use of the structure of the problem to avoid constructing the DAG and compute directly. Recall the triangle in \ref{E:18:1}. If we consider the values from top to bottom, from left to right as a single array we can see that the index of the first entry of each row is $0, 1, 3, 6$ and that in general these will be the triangle numbers $\frac{j(j+1)}{2}$ for row $j$ (zero indexed). We can create a second array to hold the labelings. The first distance will be $0$. For row $j$ the $k^{th}$ entry will (again, zero indexed) will consider distances from the $k-1$ and $k$ entry in the previous row, with special cases for the end points $k=0$ and $k=\frac{(j+1)(j+2)}{2}-1$. We can simply find the labeling and edge weight for these two points. 
+
+			We demonstrate using the example. First we mark the start vertex with a distance of $0$. 
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&{3}&&& \\
+					&&{7}&& 4&& \\
+					&2&&{4}&& 6& \\
+					8 && 5 && {9} && 3
+				\end{array} &\hspace{1 cm}&\begin{array}{ccccccc}
+					&&& 0 \\
+					\ \\
+					\ \\
+					\
+				\end{array}
+			\end{alignat}
 			
+			On row $1$ and entry $0$ we compute the sum of the previous distance ($0$) and the edge ($3$). Likewise for row $1$ and entry $1$. 
+
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&{3}&&& \\
+					&&{7}&& 4&& \\
+					&2&&{4}&& 6& \\
+					8 && 5 && {9} && 3
+				\end{array} &\hspace{1 cm}&\begin{array}{ccccccc}
+					&&& 0 \\
+					&& 3 && 3\\
+					\ \\
+					\
+				\end{array}
+			\end{alignat}
+			
+			On row $2$ the first entry must be $3+7=10$, the last entry must be $3+4=7$. 
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&{3}&&& \\
+					&&{7}&& 4&& \\
+					&2&&{4}&& 6& \\
+					8 && 5 && {9} && 3
+				\end{array} &\hspace{1 cm}&\begin{array}{ccccccc}
+					&&& 0 \\
+					&& 3 && 3\\
+					& 10 & && & 7 \\
+					&&&&&&
+				\end{array}
+			\end{alignat}
+			For the first (middle) element we have a choice. We may pass through $7$ or $4$. Since each node above it has a distance of $3$ we choose $3+7=10$ over $3+4=7$ (recall, we are looking for the largest/longest path). 
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&{3}&&& \\
+					&&{7}&& 4&& \\
+					&2&&{4}&& 6& \\
+					8 && 5 && {9} && 3
+				\end{array} &\hspace{1 cm}&\begin{array}{ccccccc}
+					&&& 0 \\
+					&& 3 && 3\\
+					& 10 & &10 & & 7 \\
+					&&&&&&
+				\end{array}
+			\end{alignat}
+
+			On row $3$ we fix the end points as before
+			
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&{3}&&& \\
+					&&{7}&& 4&& \\
+					&2&&{4}&& 6& \\
+					8 && 5 && {9} && 3
+				\end{array} &\hspace{1 cm}&\begin{array}{ccccccc}
+					&&& 0 \\
+					&& 3 && 3\\
+					& 10 & &10 & & 7 \\
+					18 &&&&& &10 
+				\end{array}
+			\end{alignat}
+			
+			For $k=1$ we choose between $10+2=12$ and $10+4=14$ and for $k=2$ we choose between $10+4=14$ and $7+6=13$. 
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&{3}&&& \\
+					&&{7}&& 4&& \\
+					&2&&{4}&& 6& \\
+					8 && 5 && {9} && 3
+				\end{array} &\hspace{1 cm}&\begin{array}{ccccccc}
+					&&& 0 \\
+					&& 3 && 3\\
+					& 10 & &10 & & 7 \\
+					18 &&14&&14& &10 
+				\end{array}
+			\end{alignat}
+
+			For the final distance we sum the distance to each point and the value at that point and choose the largest, in this case $14+9=23$. 
+		
 \appendix
 
 	\chapter{Problem 13}\label{A:P:13}
