@@ -1061,8 +1061,43 @@ While Project Euler requests that the solutions not be shared outside of the for
 		\end{quote}
 		
 		\section{Introduction}
-			One technique to easily compute the longest path is to consider the triangle as a Directed Acyclic Group (or DAG). Each node sits at under a number in the triangle and the cost to move from one node to a subsequent node is the value at that point. We connect each element of the bottom row to a single sink point. Adapting the shortest path for a DAG algorithm results in a linear solution rather than exponential. 
-	
+			One technique to easily compute the longest path is to consider the triangle as a Directed Acyclic Group (or DAG). Each node sits at under a number in the triangle and the cost to move from one node to a subsequent node is the value at that point. We connect each element of the bottom row to a single sink point. The shortest path for a DAG algorithm is linear in time rather than exponential. Since the algorithm does not depend on non-negative path weights we may compute the longest path by negating all the weights. 
+			
+		\section{directed Acyclic Graphs}
+		
+			We first must understand what we mean by a directed acyclic graph, and we start with the graph\footnote{The following definitions are taken from \cite{Jung2004}.}. 
+			\begin{definition}[Graph]\index{graph}
+				A graph is an ordered pair $G=\set{V, E}$ consisting of a finite\footnote{In a more general setting a graph may have an infinite set of vertices, but these are not considered here.} set $V\neq \emptyset$ and a set $E$ of two element subsets of $V$. The elements of $V$ are called \index{vertex}\emph{vertices}. An element $e=\set{a, b}\in E$ is called an \index{edge}\emph{edge} with end vertices $a$ and $b$ in $V$. 
+			\end{definition}
+			
+			A directed graph (or digraph) is simply a graph where the edges only move in one direction
+			\begin{definition}[Digraph]\index{digraph}\index{directed graph|see{digraph}}
+				A digraph is an ordered pair $G=\set{V, E}$ consisting of a finite set $V\neq \emptyset$ of vertices and a set $E$ of \emph{ordered pairs} $(a, b)$ where $a\neq b$ are both elements of $V$. The elements of $V$ are called vertices and the elements of $E$ are called edges or sometimes arcs to distinguish them from the non-directed case. 
+			\end{definition}
+			
+			In order to discuss acyclic graph we formalize the notion of moving through a graph. 
+			
+			\begin{definition}[Trail]\index{trail}\index{closed trail}\index{trail!closed|see{closed trail}}
+				A \emph{trail} is a sequence $\set{e_1, e_2, \dots, e_n}$ such that for $k\leq 1<n$, $e_k$ and $e_{k+1}$ share a vertex. A \emph{closed trail} is one in which $e_1$ and $e_n$ share a vertex. 
+			\end{definition}
+			
+			\begin{definition}[Directed Acyclic Graph]\index{DAG|see{directed acyclic graph}}\index{directed acyclic graph}
+				A directed acyclic graph (DAG) is a directed graph with no closed trails.
+			\end{definition}
+			
+			\begin{definition}[Topological Sort]\index{topological sort}
+				A topological sort on a DAG $G$ is an ordering of the vertices produced as follows:
+				\begin{enumerate}
+					\item Create an empty list $L$. 
+					\item\label{Step:18:1} Find a vertex $v\in V$ with no inbound edge (for a DAG this is guaranteed to exist). 
+					\item Add $v$ to the end of the list $L$ 
+					\item Remove $v$ and associated edges from the graph
+					\item If $V$ is non-empty return to step \ref{Step:18:1}
+				\end{enumerate}
+			\end{definition}
+			
+			With these definitions we are prepared to compute the shortest path of a DAG. Given a DAG, a start vertex and an end vertex we execute a topological sort of the vertices. Using this we find the start vertex and label the vertex with length 0. Then for each vertex $v$ we consider each inbound edge. The vertex on the other side of that edge will be labeled (because we are working through the vertices in the topological sort) with a length. We consider the length to that vertex plus the edge weight and find the lowest value for all edges which point to $v$ and label $v$ accordingly. Once we label the ending vertex we will have computed the minimum distance. The algorithm runs in $O\left(\order{V}+\order{E}\right)$. 
+			
 \appendix
 
 	\chapter{Problem 13}\label{A:P:13}
