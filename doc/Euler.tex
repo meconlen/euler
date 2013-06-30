@@ -1194,10 +1194,38 @@ While Project Euler requests that the solutions not be shared outside of the for
 			\end{alignat}
 
 			For the final distance we sum the distance to each point and the value at that point and choose the largest, in this case $14+9=23$. 
-		\section{Implementation}
+		\section{Implementation} \label{C:18:Implementation}
 
 			The solution described above is implemented in Listing \ref{L:18:1}. 		
 			\lstinputlisting[linerange=triangleMax-end\ triangleMax,caption=Problem 18: \texttt{triangleMax()},label=L:18:1,float=htp]{../src/lang/C/18-1.c}
+
+
+
+
+
+	\chapter{Maximum Path Sum II}
+	
+		\begin{quote}
+			By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
+			\begin{alignat}{4}
+				\begin{array}{ccccccc}
+					&&&\textcolor{red}{3}&&& \\
+					&&\textcolor{red}{7}&& 4&& \\
+					&2&&\textcolor{red}{4}&& 6& \\
+					8 && 5 && \textcolor{red}{9} && 3
+				\end{array} \label{E:18:1}
+			\end{alignat}
+
+			That is, $3 + 7 + 4 + 9 = 23$.
+
+			Find the maximum total from top to bottom of the triangle in \url{http://projecteuler.net/project/triangle.txt}
+
+			NOTE: This is a much more difficult version of Problem 18. It is not possible to try every route to solve this problem, as there are $2^99$ altogether! If you could check one trillion $\left(10^12\right)$ routes every second it would take over twenty billion years to check them all. There is an efficient algorithm to solve it. ;o)
+		\end{quote}
+
+		\section{Introduction}
+		
+			This problem yields to the same solution as in Section \ref{C:18:Implementation}. 
 
 \appendix
 
