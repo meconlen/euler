@@ -1,0 +1,65 @@
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#include "factor.h"
+#include "palindrome.h"
+#include "algebra.h"
+#include "sieve.h"
+
+uint64_t	triangle[] = { 
+75,
+95, 64,
+17, 47, 82,
+18, 35, 87, 10,
+20, 4, 82, 47, 65,
+19, 1, 23, 75, 3, 34,
+88, 2, 77, 73, 7, 63, 67,
+99, 65, 4, 28, 6, 16, 70, 92,
+41, 41, 26, 56, 83, 40, 80, 70, 33,
+41, 48, 72, 33, 47, 32, 37, 16, 94, 29,
+53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14,
+70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57,
+91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48,
+63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31,
+4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23
+};
+
+#define ROWS 15
+
+// triangleMax //
+int64_t triangleMax(void)
+{
+	uint64_t	max, j, k, l, r, *distance;
+
+	if((distance = calloc((ROWS*(ROWS+1))/2, sizeof(uint64_t))) == NULL) goto error0;	
+	distance[0] = 0;
+	for(j=1; j<ROWS; j++) {
+		distance[(j*(j+1))/2] = distance[(j*(j-1))/2] + triangle[(j*(j-1))/2];
+		distance[(j*(j+1))/2 + j] = distance[(j*(j-1))/2 + (j-1)] + triangle[(j*(j-1))/2 + (j-1)];
+		for(k=1; k<j; k++) {
+			l = distance[(j*(j-1))/2 + k-1] + triangle[(j*(j-1))/2 + k - 1];
+			r = distance[(j*(j-1))/2 + k] + triangle[(j*(j-1))/2 + k];
+			distance[(j*(j+1))/2 + k] = l > r ? l : r;
+		}
+	}	
+	max = 0;
+	for(j=0; j<ROWS; j++) {
+		if(triangle[(ROWS*(ROWS-1))/2 + j] + distance[(ROWS*(ROWS-1))/2 + j] > max) max = triangle[(ROWS*(ROWS-1))/2 + j] + distance[(ROWS*(ROWS-1))/2 + j];
+	}
+	free(distance);
+	return(max);
+error0:
+	return(-1);
+}
+// end triangleMax //
+
+int main(int argc, char *argv[])
+{
+	int64_t	max;
+
+	max = triangleMax();
+	printf("max = %llu\n", max);
+	exit(0);
+}

@@ -1061,7 +1061,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 		\end{quote}
 		
 		\section{Introduction}
-			One technique to easily compute the longest path is to consider the triangle as a Directed Acyclic Group (or DAG). Each node sits at under a number in the triangle and the cost to move from one node to a subsequent node is the value at that point. We connect each element of the bottom row to a single sink point. The shortest path for a DAG algorithm is linear in time rather than exponential. Since the algorithm does not depend on non-negative path weights we may compute the longest path by negating all the weights. 
+			One technique to easily compute the longest path is to consider the triangle as a Directed Acyclic Group (or DAG). Each node sits at under a number in the triangle and the cost to move from one node to a subsequent node is the value at that point. We connect each element of the bottom row to a single sink point. The shortest path for a DAG algorithm is time linear (in the number of edges\footnote{The maximum number of edges is $\order{V}\left(\order{V}-1\right)=O\left(\order{V}^2\right)$.}) rather than exponential in vertices. Since the algorithm does not depend on non-negative path weights we may compute the longest path by negating all the weights. 
 			
 		\section{directed Acyclic Graphs}
 		
@@ -1096,13 +1096,13 @@ While Project Euler requests that the solutions not be shared outside of the for
 				\end{enumerate}
 			\end{definition}
 			
-			With these definitions we are prepared to compute the shortest path of a DAG. Given a DAG, a start vertex and an end vertex we execute a topological sort of the vertices. Using this we find the start vertex and label the vertex with length 0. Then for each vertex $v$ we consider each inbound edge. The vertex on the other side of that edge will be labeled (because we are working through the vertices in the topological sort) with a length. We consider the length to that vertex plus the edge weight and find the lowest value for all edges which point to $v$ and label $v$ accordingly. Once we label the ending vertex we will have computed the minimum distance. The algorithm runs in $O\left(\order{V}+\order{E}\right)$. 
+			With these definitions we are prepared to compute the shortest path of a DAG. Given a DAG, a start vertex and an end vertex we execute a topological sort of the vertices. Using this we find the start vertex and label the vertex with length 0. Then for each vertex $v$ we consider each inbound edge. The vertex on the other side of that edge will be labeled (because we are working through the vertices in the topological sort) with a length. We consider the length to that vertex plus the edge weight and find the lowest value for all edges which point to $v$ and label $v$ accordingly. Once we label the ending vertex we will have computed the minimum distance. The algorithm runs in $O\left(\order{E}\right)$ since $\order{E}$ will dominate $\order{V}$ and we are doing one computation for each edge. 
 		
 		\section{Solving the Triangle}
 		
-			The triangle may be placed into a DAG by placing a vertex at each point in the triangle and labeling each edge away from the vertex with the value of the point. The vertices on the last row would all have edges to a single sink point. We can make use of the structure of the problem to avoid constructing the DAG and compute directly. Recall the triangle in \ref{E:18:1}. If we consider the values from top to bottom, from left to right as a single array we can see that the index of the first entry of each row is $0, 1, 3, 6$ and that in general these will be the triangle numbers $\frac{j(j+1)}{2}$ for row $j$ (zero indexed). We can create a second array to hold the labelings. The first distance will be $0$. For row $j$ the $k^{th}$ entry will (again, zero indexed) will consider distances from the $k-1$ and $k$ entry in the previous row, with special cases for the end points $k=0$ and $k=\frac{(j+1)(j+2)}{2}-1$. We can simply find the labeling and edge weight for these two points. 
+			The triangle may be placed into a DAG by placing a vertex at each point in the triangle and labeling each edge away from the vertex with the value of the point. The vertices on the last row would all have edges to a single sink point. We can make use of the structure of the problem to avoid constructing the DAG and compute directly. Recall the triangle in \ref{E:18:1}. If we consider the values from top to bottom, from left to right as a single array we can see that the index of the first entry of each row is $0, 1, 3, 6$ and that in general these will be the triangle numbers $\frac{j(j+1)}{2}$ for row $j$ (zero indexed). We can create a second array to hold the labelings. The first distance will be $0$. For row $j$ the $k^{th}$ entry will (again, zero indexed) will consider distances from the $k-1$ and $k$ entry in the previous row, with special cases for the end points $k=0$ and $k=j$. We can simply find the labeling and edge weight for these two points. 
 
-			We demonstrate using the example. First we mark the start vertex with a distance of $0$. 
+			We demonstrate using the example. For $j=0$, $k=0$ we set the distance to $0$. 
 			\begin{alignat}{4}
 				\begin{array}{ccccccc}
 					&&&{3}&&& \\
@@ -1117,7 +1117,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 				\end{array}
 			\end{alignat}
 			
-			On row $1$ and entry $0$ we compute the sum of the previous distance ($0$) and the edge ($3$). Likewise for row $1$ and entry $1$. 
+			For $j=1$ and $k=0$ we compute the sum of the previous distance ($0$) and the edge at $j=0$, $k=0$ ($3$). Likewise for $j=1$ , $k=1$. 
 
 			\begin{alignat}{4}
 				\begin{array}{ccccccc}
@@ -1133,7 +1133,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 				\end{array}
 			\end{alignat}
 			
-			On row $2$ the first entry must be $3+7=10$, the last entry must be $3+4=7$. 
+			On row $j=2$ the first entry $k=0$ must be $3+7=10$, the last entry, $j=2$ and $k=2$, must be $3+4=7$. 
 			\begin{alignat}{4}
 				\begin{array}{ccccccc}
 					&&&{3}&&& \\
@@ -1147,7 +1147,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 					&&&&&&
 				\end{array}
 			\end{alignat}
-			For the first (middle) element we have a choice. We may pass through $7$ or $4$. Since each node above it has a distance of $3$ we choose $3+7=10$ over $3+4=7$ (recall, we are looking for the largest/longest path). 
+			For the $j=2$, $k=1$ entry we have a choice. We may pass through $j=1$, $k=0$ with edge distance $7$ or $j=1$, $k=1$ with edge distance $4$. Since each node above it has a distance of $3$ we choose $3+7=10$ over $3+4=7$ (recall, we are looking for the largest/longest path). 
 			\begin{alignat}{4}
 				\begin{array}{ccccccc}
 					&&&{3}&&& \\
@@ -1162,7 +1162,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 				\end{array}
 			\end{alignat}
 
-			On row $3$ we fix the end points as before
+			On row $j=3$ we fix the end points, $k=0$ and $k=3$ as before
 			
 			\begin{alignat}{4}
 				\begin{array}{ccccccc}
@@ -1174,7 +1174,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 					&&& 0 \\
 					&& 3 && 3\\
 					& 10 & &10 & & 7 \\
-					18 &&&&& &10 
+					12 &&&&& &13 
 				\end{array}
 			\end{alignat}
 			
@@ -1189,7 +1189,7 @@ While Project Euler requests that the solutions not be shared outside of the for
 					&&& 0 \\
 					&& 3 && 3\\
 					& 10 & &10 & & 7 \\
-					18 &&14&&14& &10 
+					12 &&14&&14& &10 
 				\end{array}
 			\end{alignat}
 
