@@ -8,6 +8,7 @@
 #include "algebra.h"
 #include "sieve.h"
 
+// countFirstSunday //
 uint64_t countFirstSunday(uint64_t n)
 {
 	uint64_t	i, count = 0, year;
@@ -22,6 +23,7 @@ uint64_t countFirstSunday(uint64_t n)
 	for(i=0; i<10; i++) if(months[i] == 1) count++;	
 	return(count);
 }
+// end countFirstSunday //
 
 int main(int argc, char *argv[])
 {
