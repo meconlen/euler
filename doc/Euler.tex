@@ -1016,13 +1016,13 @@ While Project Euler requests that the solutions not be shared outside of the for
 			
 			\lstinputlisting[linerange=findPaths-end\ findPaths,caption=Problem 15: \texttt{findPaths()},label=L:15:1,float=]{../src/lang/C/15-1.c}
 			
-	\chapter{Power digit sum}
+	\chapter{Power Digit Sum}
 		\begin{quote}
 			$2^{15}=32768$ and the sum of it's digits is $3+2+7+6+8=26$. 
 			
 			What is the sum of the digits of the number $6^{1000}$?
 		\end{quote}
-		\section{Introduction}
+		\section{Introduction}\label{S:16:1}
 		
 			This is another problem which becomes trivial once GMP is employed. We need only use GMP to write the number as a string using \texttt{mpz\_get\_str()}. The length of the string can be computed using \texttt{mpz\_sizeinbase()}. The solution is give in Listing \ref{L:16:1}
 			
@@ -1239,7 +1239,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 		
 			We implement this algorithm in the function \texttt{countFirstSunday()} in Listing \ref{L:19:1}. 
 			
-			\lstinputlisting[linerange=countFirstSunday-end\ countFirstSunday,caption=Problem 18: \texttt{countFirstSunday()},label=L:19:1,float=htp]{../src/lang/C/19-1.c}
+			\lstinputlisting[linerange=countFirstSunday-end\ countFirstSunday,caption=Problem 19: \texttt{countFirstSunday()},label=L:19:1,float=htp]{../src/lang/C/19-1.c}
 
 	\chapter{Factorial Digit Sum}
 	
@@ -1252,6 +1252,17 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 			
 			Find the sum of the digits in the number $100!$
 		\end{quote}
+		
+		\section{Introduction}
+		
+			For this problem I modified the solution to problem 16 in Section \ref{S:16:1}. 
+			
+		\section{Implementation}
+		
+			The solution is given in Listing \ref{L:20:1}. 
+		
+			\lstinputlisting[linerange=factorialDigitSum-end\ factorialDigitSum,caption=Problem 20: \texttt{factorialDigitSum()},label=L:20:1,float=htp]{../src/lang/C/20-1.c}
+		
 
 
 	\chapter{Maximum Path Sum II}
