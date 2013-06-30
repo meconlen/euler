@@ -1199,8 +1199,42 @@ While Project Euler requests that the solutions not be shared outside of the for
 			The solution described above is implemented in Listing \ref{L:18:1}. 		
 			\lstinputlisting[linerange=triangleMax-end\ triangleMax,caption=Problem 18: \texttt{triangleMax()},label=L:18:1,float=htp]{../src/lang/C/18-1.c}
 
+	\chapter{Counting Sundays}
+	
+		\begin{quote}
+			You are given the following information, but you may prefer to do some research for yourself.
 
+			\begin{itemize}
+				\item 1 Jan 1900 was a Monday.
+				\item Thirty days has September, \\
+					April, June and November. \\
+					All the rest have thirty-one, \\
+					Saving February alone, \\
+					Which has twenty-eight, rain or shine. \\
+					And on leap years, twenty-nine.
+				\item A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+			\end{itemize}
+How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+		\end{quote}
 
+		\section{Introduction}
+		
+			Notice that $365\equiv 1\pmod{7}$ and $366\equiv 2\pmod{7}$ thus on non-leap years the first Sunday of each month changes by one day down to $1$ then back to $7$. On leap years the first Sunday of each month changes by two; that is, if the first Sunday of March 1901 is the $3^{rd}$ then the first Sunday of March 1902 is the $2^{nd}$. Since the leap day is the last day of February is make sense to consider years starting in March (handling the first and last year accordingly).
+			
+			We can write down the day of the month for the first Sunday of each Month from March 1901 through February 1902 as
+			\begin{alignat}{4}
+				D^{1901}=\set{3, 7, 5, 2, 7, 4, 1, 6, 3, 1, 5, 2} \notag
+			\end{alignat}
+			then for the following year, as it's not a leap year we have 
+			\begin{alignat}{4}
+				D^{1902}=\set{2, 6, 4, 1, 6, 3, 7, 5, 2, 7, 4, 1} \notag 
+			\end{alignat}
+			We can compute, using the ternary operator 
+			\begin{alignat*}{4}
+				D^{1902}_{k}= D^{1901}_{k} - 1 + \left( \left(D^{1901}_k -1\right) < 1\ ?\ 7\ :\ 0\right)
+			\end{alignat*}
+			
+			Thus we can compute each year and sum the number of $1$ elements. 
 
 
 	\chapter{Maximum Path Sum II}
