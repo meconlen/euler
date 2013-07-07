@@ -9,32 +9,32 @@
 #include "sieve.h"
 
 // findMaxExponent //
-int64_t findMaxExponent(void)
+uint64_t findMaxExponent(void)
 {
 	FILE		*f;
-	uint64_t	i, b, e, maxI = 0;
+	uint64_t	i = 1, b, e, maxI = 0;
 	long double	val, maxVal = 0;
 	char		c;
 	
 	if((f = fopen("p99.txt", "r")) == NULL) goto error0;
-	for(i=0; i<1000; i++) {
-		fscanf(f, "%llu%c%llu", &b, &c, &e);
+	while(fscanf(f, "%llu%c%llu", &b, &c, &e) != EOF) {
 		val = e*logl(b);
 		if(val > maxVal) { maxVal = val; maxI = i; }
+		i++;
 	}
 	fclose(f);
-	return(maxI + 1);
+	return(maxI);
 error0:
-	return(-1);
+	return(0);
 }
 // end findMaxExponent //
 
 int main(int argc, char *argv[])
 {
-	int64_t	x;
+	uint64_t	x;
 	
 	x = findMaxExponent();
-	printf("%lld\n", x);	
+	printf("%llu\n", x);	
 	exit(0);
 // error0:
 	exit(-1);
