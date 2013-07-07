@@ -1390,6 +1390,37 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 
 			NOTE: The first two lines in the file represent the numbers in the example given above.
 		\end{quote}
+		
+		\section{Introduction}
+		
+			The size of these values makes direct computation using machine size variables impossible and computation using arbitrary precision integers costly, however, notice that we can compute
+			\begin{alignat}{4}
+				\log{\left(x^y\right)}&=y\cdot\log{(x)} \notag 
+			\end{alignat}
+			moreover, $\log$ is order preserving on $(0, \infty)$. Our only issue then is to ensure that the floating point type contains enough precision to resolve the differences on the $\log$ scale. The largest base is $999665$ and the largest exponent is $1190800$; so we must consider these ranges. If we consider a small change in $y$ we see that it results in a difference of $\log{\left(x^{y+1}\right)}-\log{\left(x^y\right)}$. Compared to the value $\log{\left(x^y\right)}$ we have 
+			\begin{alignat}{4}
+				\frac{\log{\left(x^{y+1}\right)}-\log{\left(x^y\right)}}{\log{\left(x^y\right)}}&=\frac{1}{y} \notag
+			\end{alignat}
+			Likewise considering the change in $x$ we have 
+			\begin{alignat}{4}
+				\frac{\log{\left(\left(x+1\right)^y\right)}-\log{\left(x^y\right)}}{\log{\left(x^y\right)}}&=\frac{\log{(x+1)}-\log{(x)}}{\log{(x)}} \notag \\
+					&=\frac{\log{(x+1)}}{\log{(x)}}-1 \notag 
+			\end{alignat}
+			Both of these are minimized when the variable is maximized and we evaluate at the limits
+			\begin{alignat}{4}
+				\frac{1}{1190800}&=8.39772\times 10^{-7}\notag 
+			\end{alignat} 
+			and
+			\begin{alignat}{4}
+				\frac{\log{(999665+1)}}{\log{(999665)}}-1&=7.24084\times 10^{-8} \notag 
+			\end{alignat}
+			These values indicate that we may exceed the resolution of single precision floating point. The 80-bit \texttt{long double} will certainly resolve these differences. Were machine precision be insufficient to resolve the differences we may find the largest values which are identical up to the resolution and use an arbitrary precision library to handle differentiating these results. 
+			
+		\section{Solution}
+		
+			We implement the solution in Listing \ref{L:99:1}. 
+			
+			\lstinputlisting[linerange=findMaxExponent-end\ findMaxExponent,caption=Problem 99: \texttt{findMaxExponent()},label=L:99:1,float=htp]{../src/lang/C/99-1.c}
 
 \appendix
 
