@@ -151,6 +151,7 @@
 \newcommand{\ran}[0]{\mbox{ran}~}
 
 \newcommand{\order}[1]{\left| #1 \right|}
+\newcommand{\paren}[1]{\left( #1 \right)}
 
 \lstset{rangeprefix=\/\/\ ,rangesuffix=\ \/\/}
 \lstset{
@@ -1352,7 +1353,9 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 		
 		\section{Solution}
 		
-			We determine $d(n)$ for $1\leq n\leq 10000$ and identify amicable pairs. To compute $d(n)$ we use a scheme similar to that in Chapter \ref{C:12} where we compute the prime factors and multiplicity. 
+			We determine $d(n)$ for $1\leq n\leq 10000$ and identify amicable pairs. To compute $d(n)$ we use a scheme similar to that in Chapter \ref{C:12} where we compute the prime factors and multiplicity. Notice that to compute the multiplicity of each prime we create an array of length \texttt{maxPrime} which is, in the worst case, length \texttt{n}; then scan this list. This is likely the most efficient method for small values of \texttt{n} but at larger values will dominate the runtime as this makes the algorithm $O\paren{n^2}$. 
+			
+			\lstinputlisting[linerange=sumOfAmicable-end\ sumOfAmicable,caption=Problem 21: \texttt{sumOfAmicable()},label=L:21:1,float=htp]{../src/lang/C/21-1.c}
 			
 			
 	\chapter{Maximum Path Sum II}
